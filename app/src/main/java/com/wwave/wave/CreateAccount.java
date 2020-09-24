@@ -2,8 +2,10 @@ package com.wwave.wave;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +30,7 @@ public class CreateAccount extends AppCompatActivity {
         btn_signUp = findViewById(R.id.btn_signUp);
 
         final SharedPreferences userInformation = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
+        final Intent goWelcome = new Intent(this,Welcome.class);
         btn_signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,6 +47,9 @@ public class CreateAccount extends AppCompatActivity {
                         editor.commit();
                         Toast succ = Toast.makeText(getApplicationContext(),"Account successfully created",Toast.LENGTH_SHORT);
                         succ.show();
+                        SystemClock.sleep(1000);
+                        goWelcome.putExtra("name",name);
+                        startActivity(goWelcome);
                     } else {
                         Toast youBlind = Toast.makeText(getApplicationContext(),"Passwords don't match",Toast.LENGTH_SHORT);
                         youBlind.show();
