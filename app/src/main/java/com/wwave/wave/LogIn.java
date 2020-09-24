@@ -16,6 +16,7 @@ public class LogIn extends AppCompatActivity {
     EditText et_username;
     EditText et_password;
     Button bt_logIn;
+    Button signUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class LogIn extends AppCompatActivity {
         et_password = findViewById(R.id.et_password);
         et_username = findViewById(R.id.et_username);
         bt_logIn = findViewById(R.id.btn_signIn);
+        signUp = findViewById(R.id.btn_signUp);
 
         //Allow users to store their own data
         final SharedPreferences userInformation = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -54,6 +56,14 @@ public class LogIn extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplicationContext(),"Invalid Username",Toast.LENGTH_SHORT);
                     toast.show();
                 }
+            }
+        });
+
+        final Intent signup = new Intent(this,CreateAccount.class);
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(signup);
             }
         });
 

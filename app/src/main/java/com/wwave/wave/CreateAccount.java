@@ -43,6 +43,8 @@ public class CreateAccount extends AppCompatActivity {
                         editor.putString(username,password1);
                         editor.putString(username+"NAME",name);
                         editor.commit();
+                        Toast succ = Toast.makeText(getApplicationContext(),"Account successfully created",Toast.LENGTH_SHORT);
+                        succ.show();
                     } else {
                         Toast youBlind = Toast.makeText(getApplicationContext(),"Passwords don't match",Toast.LENGTH_SHORT);
                         youBlind.show();
