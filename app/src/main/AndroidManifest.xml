@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/my_logo_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Welcome"></activity>
+        <activity android:name=".EmailActivity"></activity>
+        <activity android:name=".Welcome" />
         <activity android:name=".CreateAccount" />
         <activity android:name=".LogIn">
             <intent-filter>
