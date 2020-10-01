@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/my_logo_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EmailActivity"></activity>
+        <activity android:name=".EmailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wwave.wave.About"/>
+        </activity>
         <activity android:name=".Welcome" />
         <activity android:name=".CreateAccount" />
         <activity android:name=".LogIn">
@@ -20,6 +24,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".About">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Welcome"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>

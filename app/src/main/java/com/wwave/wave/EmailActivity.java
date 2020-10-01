@@ -1,5 +1,6 @@
 package com.wwave.wave;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -23,6 +24,11 @@ public class EmailActivity extends AppCompatActivity {
         message = findViewById(R.id.editEmailMessage);
         btnSend = findViewById(R.id.btnSendEmail);
 
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
 
         final Intent intent = new Intent(Intent.ACTION_SENDTO);
         btnSend.setOnClickListener(new View.OnClickListener() {
