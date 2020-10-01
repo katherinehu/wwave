@@ -14,7 +14,6 @@ import android.widget.Toolbar;
 public class Welcome extends AppCompatActivity {
 
     TextView tv_nameOfPerson;
-    private Toolbar tb_toolbar;
 
 
     @Override
@@ -27,15 +26,12 @@ public class Welcome extends AppCompatActivity {
         Intent info = getIntent();
         String name = info.getStringExtra("name");
         tv_nameOfPerson.setText(name);
-
-        tb_toolbar = findViewById(R.id.tb_toolbar);
-        setSupportActionBar(tb_toolbar);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.main_menu, menu);
+//        return true;
+//    }
 }
