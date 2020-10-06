@@ -4,8 +4,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -23,11 +25,13 @@ public class Welcome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
+        //Load name to display
+        final SharedPreferences userInformation = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String name = userInformation.getString("nameOfUser","you shouldn't see this message");
+
         tv_nameOfPerson = findViewById(R.id.tv_nameOfPerson);
         btnAbout = findViewById(R.id.btnAbout);
 
-        Intent info = getIntent();
-        String name = info.getStringExtra("name");
         tv_nameOfPerson.setText(name);
 
         final Intent goAbout = new Intent(this,About.class);
