@@ -44,7 +44,9 @@ public class LogIn extends AppCompatActivity {
                 if (!password.equals("this username does not exist1223323723465217513645346714")) {
                     if (password.equals(currentPassword)) {
                         String personsName = userInformation.getString(currentName + "NAME","if you ever see this, you went wrong");
-                        acceptLogin.putExtra("name",personsName);
+                        SharedPreferences.Editor editor = userInformation.edit();
+                        editor.putString("nameOfUser",personsName);
+                        editor.commit();
                         startActivity(acceptLogin);
                     } else {
                         //tell the person to go away
