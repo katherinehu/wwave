@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,6 +18,7 @@ public class Welcome extends AppCompatActivity {
 
     TextView tv_nameOfPerson;
     Button btnAbout;
+    Button btnGoToFeedback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,18 @@ public class Welcome extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(goAbout);
+            }
+        });
+
+
+        btnGoToFeedback = findViewById(R.id.btnGoToFeedback);
+        btnGoToFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://redcap.vanderbilt.edu/surveys/?s=ANNLFMHKEC";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
             }
         });
     }
