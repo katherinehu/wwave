@@ -66,4 +66,14 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.935" />
 
+    <Button
+        android:id="@+id/btnMovement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="189dp"
+        android:text="Check Movement"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_nameOfPerson" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

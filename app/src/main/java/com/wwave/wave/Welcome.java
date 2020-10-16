@@ -19,6 +19,7 @@ public class Welcome extends AppCompatActivity {
     TextView tv_nameOfPerson;
     Button btnAbout;
     Button btnGoToFeedback;
+    Button btnMovement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class Welcome extends AppCompatActivity {
 
         tv_nameOfPerson = findViewById(R.id.tv_nameOfPerson);
         btnAbout = findViewById(R.id.btnAbout);
+        btnMovement = findViewById(R.id.btnMovement);
 
         Intent info = getIntent();
         String name = info.getStringExtra("name");
@@ -49,6 +51,14 @@ public class Welcome extends AppCompatActivity {
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
+            }
+        });
+
+        final Intent goAccel = new Intent(this,AccelActivity.class);
+        btnMovement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(goAccel);
             }
         });
     }
