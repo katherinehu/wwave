@@ -81,10 +81,11 @@ public class AccelActivity extends Activity implements SensorEventListener {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    allMovements[0].appendData(new DataPoint(counter,currentAccel),true,50,true);
+                    allMovements[0].appendData(new DataPoint(counter,currentAccel),true,10000,true);
                     counter++;
-                    if (counter % 50 == 0) {
-                        new updateGraph().execute(allMovements[0]);
+
+                    new updateGraph().execute(allMovements[0]);
+                    if (counter % 100 == 0) {
                         allMovements[0] = new LineGraphSeries<>();
                     }
                 }
