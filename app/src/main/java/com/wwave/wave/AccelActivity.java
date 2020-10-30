@@ -54,7 +54,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
                 int yPrecision = 1;
                 int zPrecision = 1;
                 //50 hz of sampling rate
-                int samplingRate = 50;
+                int samplingRate = 20;
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
