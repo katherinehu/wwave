@@ -54,7 +54,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
                 int yPrecision = 1;
                 int zPrecision = 1;
                 //50 hz of sampling rate
-                int samplingRate = 3;
+                int samplingRate = 2;
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
@@ -81,7 +81,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    allMovements.appendData(new DataPoint(counter,currentAccel),false,counter*2,true);
+                    allMovements.appendData(new DataPoint(counter,currentAccel),true,1000,true);
                     counter++;
                     gv_Movement.addSeries(allMovements);
                 }
