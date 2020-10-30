@@ -84,7 +84,10 @@ public class AccelActivity extends Activity implements SensorEventListener {
                     allMovements[0].appendData(new DataPoint(counter,currentAccel),true,10000,true);
                     counter++;
 
-                    new updateGraph().execute(allMovements[0]);
+
+                    gv_Movement.removeAllSeries();
+                    gv_Movement.addSeries(allMovements[0]);
+
                     if (counter % 100 == 0) {
                         allMovements[0] = new LineGraphSeries<>();
                     }
@@ -105,21 +108,6 @@ public class AccelActivity extends Activity implements SensorEventListener {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             movement.setText(s);
-        }
-    }
-
-    class updateGraph extends AsyncTask<LineGraphSeries<DataPoint>,Void,LineGraphSeries<DataPoint>> {
-
-        @Override
-        protected LineGraphSeries<DataPoint> doInBackground(LineGraphSeries<DataPoint>... series) {
-            return series[0];
-        }
-
-        @Override
-        protected void onPostExecute(LineGraphSeries<DataPoint> s) {
-            super.onPostExecute(s);
-            gv_Movement.removeAllSeries();
-            gv_Movement.addSeries(s);
         }
     }
 
