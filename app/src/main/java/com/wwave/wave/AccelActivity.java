@@ -14,6 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.BreakIterator;
@@ -28,6 +32,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
     public float z = 0;
 
     TextView movement;
+    GraphView gv_Movement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +40,12 @@ public class AccelActivity extends Activity implements SensorEventListener {
         setContentView(R.layout.activity_accel);
 
         movement = findViewById(R.id.tvTotalMovement);
+        gv_Movement = findViewById(R.id.gv_Movement);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        ArrayList<Double> allMovements = new ArrayList<>();
+        final LineGraphSeries<DataPoint> allMovements = new LineGraphSeries<>();
 
         new Thread() {
             @Override
@@ -48,7 +54,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
                 int yPrecision = 1;
                 int zPrecision = 1;
                 //50 hz of sampling rate
-                int samplingRate = 50;
+                int samplingRate = 3;
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
@@ -60,6 +66,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
                 double prevZ = Round(z,zPrecision);
                 double prevAccel = Math.sqrt((prevX * prevX) + (prevY * prevY) + (prevZ * prevZ));
                 long sleepTime = (long)(1000/(double)samplingRate);
+                int counter = 1;
                 while(true) {
                     double currentX = Round(x,xPrecision);
                     double currentY = Round(y,yPrecision);
@@ -74,6 +81,9 @@ public class AccelActivity extends Activity implements SensorEventListener {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    allMovements.appendData(new DataPoint(counter,currentAccel),false,counter*2,true);
+                    counter++;
+                    gv_Movement.addSeries(allMovements);
                 }
             }
         }.start();
