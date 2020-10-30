@@ -45,7 +45,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        final LineGraphSeries<DataPoint> allMovements = new LineGraphSeries<>();
+        final LineGraphSeries<DataPoint>[] allMovements = new LineGraphSeries[]{new LineGraphSeries<>()};
 
         new Thread() {
             @Override
@@ -54,7 +54,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
                 int yPrecision = 1;
                 int zPrecision = 1;
                 //50 hz of sampling rate
-                int samplingRate = 2;
+                int samplingRate = 50;
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
@@ -81,9 +81,12 @@ public class AccelActivity extends Activity implements SensorEventListener {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    allMovements.appendData(new DataPoint(counter,currentAccel),true,1000,true);
+                    allMovements[0].appendData(new DataPoint(counter,currentAccel),true,50,true);
                     counter++;
-                    gv_Movement.addSeries(allMovements);
+                    if (counter % 50 == 0) {
+                        new updateGraph().execute(allMovements[0]);
+                        allMovements[0] = new LineGraphSeries<>();
+                    }
                 }
             }
         }.start();
@@ -101,6 +104,21 @@ public class AccelActivity extends Activity implements SensorEventListener {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             movement.setText(s);
+        }
+    }
+
+    class updateGraph extends AsyncTask<LineGraphSeries<DataPoint>,Void,LineGraphSeries<DataPoint>> {
+
+        @Override
+        protected LineGraphSeries<DataPoint> doInBackground(LineGraphSeries<DataPoint>... series) {
+            return series[0];
+        }
+
+        @Override
+        protected void onPostExecute(LineGraphSeries<DataPoint> s) {
+            super.onPostExecute(s);
+            gv_Movement.removeAllSeries();
+            gv_Movement.addSeries(s);
         }
     }
 
