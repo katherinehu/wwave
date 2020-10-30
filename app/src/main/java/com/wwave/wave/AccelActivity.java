@@ -14,7 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.BreakIterator;
+import java.util.ArrayList;
 
 public class AccelActivity extends Activity implements SensorEventListener {
     private SensorManager sensorManager;
@@ -36,39 +39,42 @@ public class AccelActivity extends Activity implements SensorEventListener {
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        final float[] first_x = {0};
-        final float[] second_x = {0};
-        final float[] first_y = {0};
-        final float[] second_y = {0};
-        final float[] first_z = {0};
-        final float[] second_z = {0};
-
-        first_x[0] = x;
-        first_y[0] = y;
-        first_z[0] = z;
-
-        final double[] totalMovement = {0};
+        ArrayList<Double> allMovements = new ArrayList<>();
 
         new Thread() {
             @Override
             public void run() {
-                boolean keepRunning = true;
-                while (keepRunning) {
-                    second_x[0] = x;
-                    second_y[0] = y;
-                    second_z[0] = z;
-
-                    totalMovement[0] += Math.sqrt((second_x[0] - first_x[0]) * (second_x[0] - first_x[0]) +
-                            (second_y[0] - first_y[0]) * (second_y[0] - first_y[0]) +
-                            (second_z[0] - first_z[0]) * (second_z[0] - first_z[0]));
-
-                    String display = "Total movement so far: " + totalMovement[0];
+                int xPrecision = 1;
+                int yPrecision = 1;
+                int zPrecision = 1;
+                //50 hz of sampling rate
+                int samplingRate = 50;
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                double totalMovement = 0;
+                double prevX = Round(x,xPrecision);
+                double prevY = Round(y,yPrecision);
+                double prevZ = Round(z,zPrecision);
+                double prevAccel = Math.sqrt((prevX * prevX) + (prevY * prevY) + (prevZ * prevZ));
+                long sleepTime = (long)(1000/(double)samplingRate);
+                while(true) {
+                    double currentX = Round(x,xPrecision);
+                    double currentY = Round(y,yPrecision);
+                    double currentZ = Round(z,zPrecision);
+                    double currentAccel = Math.sqrt((currentX * currentX) + (currentY * currentY) + (currentZ * currentZ));
+                    totalMovement += Math.abs(currentAccel - prevAccel);
+                    prevAccel = currentAccel;
+                    String display = "Total Movement: " + Round((float) totalMovement,Math.max(zPrecision,Math.max(xPrecision,yPrecision)));
                     new update().execute(display);
-
-                    first_x[0] = second_x[0];
-                    first_y[0] = second_y[0];
-                    first_z[0] = second_z[0];
-                    SystemClock.sleep(10); }
+                    try {
+                        Thread.sleep(sleepTime);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }.start();
 
@@ -115,5 +121,11 @@ public class AccelActivity extends Activity implements SensorEventListener {
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
+    }
+
+    public double Round(float input,int scale) {
+        BigDecimal bd = BigDecimal.valueOf(input);
+        bd = bd.setScale(scale, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }
