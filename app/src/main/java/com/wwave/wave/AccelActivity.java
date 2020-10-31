@@ -42,6 +42,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
 
         movement = findViewById(R.id.tvTotalMovement);
         gv_Movement = findViewById(R.id.gv_Movement);
+        //Adjust the graph so it doesn't move around randomly
         gv_Movement.getViewport().setYAxisBoundsManual(true);
         gv_Movement.getViewport().setXAxisBoundsManual(true);
         gv_Movement.getViewport().setMaxY(maxYVal);
@@ -49,11 +50,11 @@ public class AccelActivity extends Activity implements SensorEventListener {
         gv_Movement.getViewport().setMaxX(200);
         gv_Movement.getViewport().setMinX(0);
 
-        // change movement
-
-                sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        //check movement
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        //Store movement data in a plottable object
         final LineGraphSeries<DataPoint>[] allMovements = new LineGraphSeries[]{new LineGraphSeries<>()};
 
         new Thread() {
@@ -62,7 +63,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
                 int xPrecision = 1;
                 int yPrecision = 1;
                 int zPrecision = 1;
-                //50 hz of sampling rate
+                //20 hz of sampling rate
                 int samplingRate = 20;
                 try {
                     Thread.sleep(50);
@@ -91,20 +92,23 @@ public class AccelActivity extends Activity implements SensorEventListener {
                         e.printStackTrace();
                     }
 
+                    //adjust range dynamically
                     if (currentAccel > maxYVal){
                         maxYVal = currentAccel;
                         gv_Movement.getViewport().setMaxY(maxYVal*1.1);
                     }
 
-
+                    //add new movements to the object
                     allMovements[0].appendData(new DataPoint(counter,currentAccel),true,1000,true);
                     counter++;
 
+                    //Need to clear it periodically or else it runs out of memory and crashes
                     if (counter % 10 == 0) {
                         gv_Movement.removeAllSeries();
                         gv_Movement.addSeries(allMovements[0]);
                     }
 
+                    //Every so often refresh the plot so it doesn't get all compressed after longer periods
                     if (counter % 200 == 0) {
                         allMovements[0] = new LineGraphSeries<>();
                         gv_Movement.getViewport().setMaxX(counter + 200);
@@ -117,6 +121,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
 
     }
 
+    //Use this to update the textview from inside a thread, maybe not the best possible way to do this, but it definitely works.
     class update extends AsyncTask<String,Void,String> {
 
         @Override
