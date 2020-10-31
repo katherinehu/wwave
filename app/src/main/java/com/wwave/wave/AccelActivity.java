@@ -59,7 +59,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
                 int yPrecision = 1;
                 int zPrecision = 1;
                 //50 hz of sampling rate
-                int samplingRate = 5;
+                int samplingRate = 20;
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
@@ -98,10 +98,18 @@ public class AccelActivity extends Activity implements SensorEventListener {
                     if (counter % 10 == 0) {
                         gv_Movement.removeAllSeries();
                         gv_Movement.addSeries(allMovements[0]);
+                        gv_Movement.getViewport().setMinX(1);
+                        gv_Movement.getViewport().setMaxX(200);
+                        gv_Movement.getViewport().setMinY(0);
+                        gv_Movement.getViewport().setMaxY(50);
+
+                        gv_Movement.getViewport().setYAxisBoundsManual(true);
+                        gv_Movement.getViewport().setXAxisBoundsManual(true);
                     }
 
-                    if (counter % 100 == 0) {
+                    if (counter % 200 == 0) {
                         allMovements[0] = new LineGraphSeries<>();
+                        counter = 1;
                     }
                 }
             }
