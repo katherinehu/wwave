@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 public class AccelActivity extends Activity implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor mAccelerometer;
-
+    private double maxYVal = 0;
     public float x = 0;
     public float y = 0;
     public float z = 0;
@@ -41,8 +42,12 @@ public class AccelActivity extends Activity implements SensorEventListener {
 
         movement = findViewById(R.id.tvTotalMovement);
         gv_Movement = findViewById(R.id.gv_Movement);
+        gv_Movement.getViewport().setYAxisBoundsManual(true);
+        gv_Movement.getViewport().setMaxY(maxYVal);
+        gv_Movement.getViewport().setMinY(0);
 
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+                sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         final LineGraphSeries<DataPoint>[] allMovements = new LineGraphSeries[]{new LineGraphSeries<>()};
@@ -54,7 +59,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
                 int yPrecision = 1;
                 int zPrecision = 1;
                 //50 hz of sampling rate
-                int samplingRate = 20;
+                int samplingRate = 5;
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
@@ -81,12 +86,19 @@ public class AccelActivity extends Activity implements SensorEventListener {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    allMovements[0].appendData(new DataPoint(counter,currentAccel),true,10000,true);
+
+                    if (currentAccel > maxYVal){
+                        maxYVal = currentAccel;
+                        gv_Movement.getViewport().setMaxY(maxYVal*1.1);
+                    }
+
+                    allMovements[0].appendData(new DataPoint(counter,currentAccel),true,1000,true);
                     counter++;
 
-
-                    gv_Movement.removeAllSeries();
-                    gv_Movement.addSeries(allMovements[0]);
+                    if (counter % 10 == 0) {
+                        gv_Movement.removeAllSeries();
+                        gv_Movement.addSeries(allMovements[0]);
+                    }
 
                     if (counter % 100 == 0) {
                         allMovements[0] = new LineGraphSeries<>();
