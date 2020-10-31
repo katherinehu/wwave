@@ -45,7 +45,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
         gv_Movement.getViewport().setYAxisBoundsManual(true);
         gv_Movement.getViewport().setMaxY(maxYVal);
         gv_Movement.getViewport().setMinY(0);
-
+        // change movement
 
                 sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
