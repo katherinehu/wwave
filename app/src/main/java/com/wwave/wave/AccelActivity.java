@@ -43,8 +43,12 @@ public class AccelActivity extends Activity implements SensorEventListener {
         movement = findViewById(R.id.tvTotalMovement);
         gv_Movement = findViewById(R.id.gv_Movement);
         gv_Movement.getViewport().setYAxisBoundsManual(true);
+        gv_Movement.getViewport().setXAxisBoundsManual(true);
         gv_Movement.getViewport().setMaxY(maxYVal);
         gv_Movement.getViewport().setMinY(0);
+        gv_Movement.getViewport().setMaxX(200);
+        gv_Movement.getViewport().setMinX(0);
+
         // change movement
 
                 sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -92,24 +96,20 @@ public class AccelActivity extends Activity implements SensorEventListener {
                         gv_Movement.getViewport().setMaxY(maxYVal*1.1);
                     }
 
+
                     allMovements[0].appendData(new DataPoint(counter,currentAccel),true,1000,true);
                     counter++;
 
                     if (counter % 10 == 0) {
                         gv_Movement.removeAllSeries();
                         gv_Movement.addSeries(allMovements[0]);
-                        gv_Movement.getViewport().setMinX(1);
-                        gv_Movement.getViewport().setMaxX(200);
-                        gv_Movement.getViewport().setMinY(0);
-                        gv_Movement.getViewport().setMaxY(50);
-
-                        gv_Movement.getViewport().setYAxisBoundsManual(true);
-                        gv_Movement.getViewport().setXAxisBoundsManual(true);
                     }
 
                     if (counter % 200 == 0) {
                         allMovements[0] = new LineGraphSeries<>();
-                        counter = 1;
+                        gv_Movement.getViewport().setMaxX(counter + 200);
+                        gv_Movement.getViewport().setMinX(counter);
+
                     }
                 }
             }
