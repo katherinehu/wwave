@@ -14,7 +14,10 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.Viewport;
@@ -62,6 +65,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
         //Store movement data in a plottable object
         final LineGraphSeries<DataPoint>[] allMovements = new LineGraphSeries[]{new LineGraphSeries<>()};
 
+        //region update data thread
         new Thread() {
             @Override
             public void run() {
@@ -120,16 +124,31 @@ public class AccelActivity extends Activity implements SensorEventListener {
 
                     }
 
-                    btnStop = findViewById(R.id.btnStop);
-                    btnStop.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            collectData = false;
-                        }
-                    });
                 }
             }
         }.start();
+        //endregion
+
+        String nameLine;
+
+        btnStop = findViewById(R.id.btnStop);
+        btnStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                collectData = false;
+                String messageToSend = Double.toString(totalMovement);
+
+                nameLine = findViewById(R.id.etEmailAdd);
+                final Intent intent = new Intent(Intent.ACTION_SENDTO);
+
+                String recipients = nameLine;
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(intent.EXTRA_EMAIL, recipients);
+                intent.putExtra(intent.EXTRA_SUBJECT, subject);
+                intent.putExtra(intent.EXTRA_TEXT, messageToSend);
+                startActivity(intent);
+                }
+        });
 
     }
 
