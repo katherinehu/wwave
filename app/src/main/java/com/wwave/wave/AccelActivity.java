@@ -137,10 +137,12 @@ public class AccelActivity extends Activity implements SensorEventListener {
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 collectData = false;
                 String messageToSend = Double.toString(totalMovement);
                 final Intent intent = new Intent(Intent.ACTION_SENDTO);
-                String recipients = nameLine.getText().toString();
+                String recipientList = nameLine.getText().toString();
+                String [] recipients = recipientList.split(",");
                 String subject = "Here is the movement you want:";
                 intent.setData(Uri.parse("mailto:"));
                 intent.putExtra(intent.EXTRA_EMAIL, recipients);
@@ -148,6 +150,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
                 intent.putExtra(intent.EXTRA_TEXT, messageToSend);
                 startActivity(intent);
             }
+
         });
 
     }
