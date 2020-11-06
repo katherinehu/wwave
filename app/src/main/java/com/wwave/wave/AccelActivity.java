@@ -33,6 +33,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor mAccelerometer;
     Button btnStop;
+    EditText nameLine;
     private double maxYVal = 0;
     public float x = 0;
     public float y = 0;
@@ -50,6 +51,8 @@ public class AccelActivity extends Activity implements SensorEventListener {
 
         movement = findViewById(R.id.tvTotalMovement);
         gv_Movement = findViewById(R.id.gv_Movement);
+        nameLine = (EditText) findViewById(R.id.etEmailAdd);
+
         //Adjust the graph so it doesn't move around randomly
         gv_Movement.getViewport().setYAxisBoundsManual(true);
         gv_Movement.getViewport().setXAxisBoundsManual(true);
@@ -57,6 +60,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
         gv_Movement.getViewport().setMinY(0);
         gv_Movement.getViewport().setMaxX(200);
         gv_Movement.getViewport().setMinX(0);
+
 
         //check movement
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -129,25 +133,21 @@ public class AccelActivity extends Activity implements SensorEventListener {
         }.start();
         //endregion
 
-        String nameLine;
-
         btnStop = findViewById(R.id.btnStop);
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 collectData = false;
                 String messageToSend = Double.toString(totalMovement);
-
-                nameLine = findViewById(R.id.etEmailAdd);
                 final Intent intent = new Intent(Intent.ACTION_SENDTO);
-
-                String recipients = nameLine;
+                String recipients = nameLine.getText().toString();
+                String subject = "Here is the movement you want:";
                 intent.setData(Uri.parse("mailto:"));
                 intent.putExtra(intent.EXTRA_EMAIL, recipients);
                 intent.putExtra(intent.EXTRA_SUBJECT, subject);
                 intent.putExtra(intent.EXTRA_TEXT, messageToSend);
                 startActivity(intent);
-                }
+            }
         });
 
     }
