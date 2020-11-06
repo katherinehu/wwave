@@ -3,10 +3,12 @@ package com.wwave.wave;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -27,10 +29,13 @@ import java.util.ArrayList;
 public class AccelActivity extends Activity implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor mAccelerometer;
+    Button btnStop;
     private double maxYVal = 0;
     public float x = 0;
     public float y = 0;
     public float z = 0;
+    public boolean collectData = true;
+    public double totalMovement = 0;
 
     TextView movement;
     GraphView gv_Movement;
@@ -69,14 +74,13 @@ public class AccelActivity extends Activity implements SensorEventListener {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                double totalMovement = 0;
                 double prevX = Round(x,xPrecision);
                 double prevY = Round(y,yPrecision);
                 double prevZ = Round(z,zPrecision);
                 double prevAccel = Math.sqrt((prevX * prevX) + (prevY * prevY) + (prevZ * prevZ));
                 long sleepTime = (long)(1000/(double)samplingRate);
                 int counter = 1;
-                while(true) {
+                while(collectData) {
                     double currentX = Round(x,xPrecision);
                     double currentY = Round(y,yPrecision);
                     double currentZ = Round(z,zPrecision);
@@ -111,6 +115,14 @@ public class AccelActivity extends Activity implements SensorEventListener {
                         gv_Movement.getViewport().setMinX(counter);
 
                     }
+
+                    btnStop = findViewById(R.id.btnStop);
+                    btnStop.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            collectData = false;
+                        }
+                    });
                 }
             }
         }.start();
