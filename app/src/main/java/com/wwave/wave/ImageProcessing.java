@@ -8,6 +8,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -117,7 +118,25 @@ public class ImageProcessing extends AppCompatActivity {
         //handle for full image case
         else if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhotoPath);
+            int height = imageBitmap.getHeight();
+            int width = imageBitmap.getWidth();
+            int[] pixels = new int[height*width];
+            imageBitmap.getPixels(pixels,0,width,0,0,width,height);
+            int totalRed = 0;
+            int totalBlue = 0;
+            int totalGreen = 0;
+            for (int counter = 0; counter < height*width; ++counter) {
+                int red, blue, green;
+                red = Color.red(pixels[counter]);
+                blue = Color.blue(pixels[counter]);
+                green = Color.green(pixels[counter]);
+                totalRed += red;
+                totalGreen += green;
+                totalBlue += blue;
+            }
             fullImage.setImageBitmap(imageBitmap);
+            String display = (double) ((totalRed)/(totalRed+totalBlue+totalGreen)) + " % Red";
+            filename.setText(display);
         }
         Log.d(TAG,"exit onActivityResult");
     }

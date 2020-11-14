@@ -22,7 +22,8 @@
         android:roundIcon="@mipmap/my_logo_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ImageProcessing"></activity>
+        <activity android:name=".ImageCalculations"></activity>
+        <activity android:name=".ImageProcessing" />
         <activity android:name=".AccelActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
