@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+</PreferenceScreen>-->
+
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-files-path
+        name="my_images"
+        path ="/"/>
+    <!--path="storage/emulated/0/Android/data/edu.bme3890.testcamera2020_v1/files/Pictures"-->
+</paths>

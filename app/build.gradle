@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+android {
+    defaultConfig.applicationId = "com.wwave.wave"
+}
 //added for cameraX implementation
 allprojects {
     repositories {
