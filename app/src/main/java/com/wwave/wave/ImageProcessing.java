@@ -122,9 +122,9 @@ public class ImageProcessing extends AppCompatActivity {
             int width = imageBitmap.getWidth();
             int[] pixels = new int[height*width];
             imageBitmap.getPixels(pixels,0,width,0,0,width,height);
-            int totalRed = 0;
-            int totalBlue = 0;
-            int totalGreen = 0;
+            long totalRed = 0;
+            long totalBlue = 0;
+            long totalGreen = 0;
             for (int counter = 0; counter < height*width; ++counter) {
                 int red, blue, green;
                 red = Color.red(pixels[counter]);
