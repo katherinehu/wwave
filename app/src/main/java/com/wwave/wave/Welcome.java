@@ -35,13 +35,6 @@ public class Welcome extends AppCompatActivity {
     Button btnMovement;
     Button btnCustom;
 
-    //Camera stuff
-    static final int REQUEST_IMAGE_CAPTURE = 100;
-    static final int REQUEST_TAKE_PHOTO = 1;
-    static final String TAG = "Camera Activity";
-    private String currentPhotoPath;
-    private TextView filename;
-    Button btnTakePicture;
 
 
     @Override
@@ -49,15 +42,11 @@ public class Welcome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        //Camera stuff
-        //btnTakePicture = findViewById(R.id.camera_capture_button);
-        filename = findViewById(R.id.tv_filename);
-        btnCustom = findViewById(R.id.btn_custom);
-
 
         tv_nameOfPerson = findViewById(R.id.tv_nameOfPerson);
         btnAbout = findViewById(R.id.btnAbout);
         btnMovement = findViewById(R.id.btnMovement);
+        btnCustom = findViewById(R.id.btn_custom);
 
         Intent info = getIntent();
         String name = info.getStringExtra("name");
@@ -91,7 +80,7 @@ public class Welcome extends AppCompatActivity {
             }
         });
 
-        final Intent goCam = new Intent(this, CustomCamera.class);
+        final Intent goCam = new Intent(this, ImageProcessing.class);
         btnCustom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,16 +91,7 @@ public class Welcome extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG,"entering onActivityResult");
 
-        //generate bitmap
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhotoPath);
-        }
-        Log.d(TAG,"exit onActivityResult");
-    }
 //
 //    public void takeCustomPhoto (View v){
 //        Intent intent = new Intent(this, CustomCamera.class);
@@ -152,19 +132,5 @@ public class Welcome extends AppCompatActivity {
 //    }
 
 
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  ///* prefix */
-                ".jpg",  //       /* suffix */
-                storageDir     // /* directory */
-        );
 
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
 }

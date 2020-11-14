@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wwave.wave">
-
-    <!--feature and permissions for intent-based camera-->
+    <!-- feature and permissions for intent-based camera -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <!--permission for custom camera-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- permission for custom camera -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -20,6 +17,7 @@
         android:roundIcon="@mipmap/my_logo_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ImageProcessing"></activity>
         <activity android:name=".AccelActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -32,7 +30,7 @@
         </activity>
         <activity android:name=".Welcome" />
         <activity android:name=".CreateAccount" />
-        <activity android:name=".CustomCamera"/>
+        <activity android:name=".CustomCamera" />
         <activity android:name=".LogIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
