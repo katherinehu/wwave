@@ -23,6 +23,8 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -135,10 +137,17 @@ public class ImageProcessing extends AppCompatActivity {
                 totalBlue += blue;
             }
             fullImage.setImageBitmap(imageBitmap);
-            String display =  ((double)(totalRed)/(double)(height*width*255))*100 + " % Red";
+            BigDecimal part1 = BigDecimal.valueOf(totalRed);
+            BigDecimal part2 = BigDecimal.valueOf(height*width*255);
+            BigDecimal part3 = part1.divide(part2,5,BigDecimal.ROUND_HALF_DOWN);
+            String display =  (BigDecimal.valueOf(totalRed).divide(BigDecimal.valueOf((long)height*(long)width*255),100, RoundingMode.HALF_DOWN)).toPlainString() + " % Red";
             filename.setText(display);
+            Log.d(TAG,part1.toPlainString());
+            Log.d(TAG,part2.toPlainString());
+            Log.d(TAG,part3.toPlainString());
         }
         Log.d(TAG,"exit onActivityResult");
+
     }
 
     private File createImageFile() throws IOException {
