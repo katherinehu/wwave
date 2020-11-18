@@ -135,7 +135,7 @@ public class ImageProcessing extends AppCompatActivity {
                 totalBlue += blue;
             }
             fullImage.setImageBitmap(imageBitmap);
-            String display =  ((double)(totalRed)/(double)(totalRed+totalBlue+totalGreen))*100 + " % Red";
+            String display =  ((double)(totalRed)/(double)(height*width*255))*100 + " % Red";
             filename.setText(display);
         }
         Log.d(TAG,"exit onActivityResult");
