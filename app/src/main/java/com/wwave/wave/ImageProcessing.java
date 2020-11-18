@@ -140,7 +140,7 @@ public class ImageProcessing extends AppCompatActivity {
             BigDecimal part1 = BigDecimal.valueOf(totalRed);
             BigDecimal part2 = BigDecimal.valueOf(height*width*255);
             BigDecimal part3 = part1.divide(part2,5,BigDecimal.ROUND_HALF_DOWN);
-            String display =  (BigDecimal.valueOf(totalRed).divide(BigDecimal.valueOf((long)height*(long)width*255),100, RoundingMode.HALF_DOWN)).toPlainString() + " % Red";
+            String display =  (BigDecimal.valueOf(totalRed * 100).divide(BigDecimal.valueOf((long)height*(long)width*255),6, RoundingMode.HALF_DOWN)).toPlainString() + " % Red";
             filename.setText(display);
             Log.d(TAG,part1.toPlainString());
             Log.d(TAG,part2.toPlainString());
