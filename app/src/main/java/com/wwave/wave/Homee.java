@@ -89,7 +89,7 @@ public class Homee extends AppCompatActivity implements View.OnClickListener {
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url("https://api.openuv.io/api/v1/uv?lat=-33.34&lng=115.342&dt=2018-01-24T10%3A50%3A52.283Z")
+                    .url("https://api.openuv.io/api/v1/uv?lat=37.56&lng=126.97")
                     .get()
                     .addHeader("x-access-token", "0b1d3edc053bf726a35cddde61beb687")
                     .build();
@@ -102,8 +102,6 @@ public class Homee extends AppCompatActivity implements View.OnClickListener {
                 e.printStackTrace();
             }
 
-//            Headers headers = response.headers();
-//            String stringResponse = response.body().toString();
             JSONObject responseObj = null;
             try {
                 responseObj = new JSONObject(response.body().string());
@@ -111,8 +109,15 @@ public class Homee extends AppCompatActivity implements View.OnClickListener {
             } catch (JSONException | IOException e) {
                 e.printStackTrace();
             }
-            responseObj.getJSONObject("uv").getDouble();
-            int e = 6;
+
+            double uvValue = 0;
+            try {
+                uvValue = responseObj.getJSONObject("result").getDouble("uv");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String uv = Double.toString(uvValue);
+            uvIndex.setText(uv);
             return null;
         }
     }
