@@ -35,7 +35,7 @@ public class Welcome extends AppCompatActivity {
     Button btnMovement;
     Button btnCustom;
 
-//hello
+//helloo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
