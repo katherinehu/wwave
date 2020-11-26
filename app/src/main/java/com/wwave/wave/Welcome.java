@@ -72,7 +72,7 @@ public class Welcome extends AppCompatActivity {
             }
         });
 
-        final Intent goAccel = new Intent(this,AccelActivity.class);
+        final Intent goAccel = new Intent(this,Homee.class);
         btnMovement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

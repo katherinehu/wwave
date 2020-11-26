@@ -34,7 +34,7 @@ public class LogIn extends AppCompatActivity {
 
         //Collect information the login
 
-        final Intent acceptLogin = new Intent(this, Welcome.class);
+        final Intent acceptLogin = new Intent(this, Homee.class);
         bt_logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

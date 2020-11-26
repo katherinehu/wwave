@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/frank_ruhl_libre_black</item>
+        <item>@font/karla_bold</item>
+        <item>@font/lato_thin</item>
+        <item>@font/lora_bold</item>
+        <item>@font/nunito_extrabold</item>
+        <item>@font/roboto_black</item>
+        <item>@font/titillium_web_bold</item>
+        <item>@font/vollkorn_bold</item>
+    </array>
+</resources>

@@ -32,6 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Sign Up"
+        android:textColor="@android:color/white"
+        android:background="@drawable/buttonshapesmall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_reenteredCreatedPassword" />

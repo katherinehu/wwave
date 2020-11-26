@@ -54,6 +54,8 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:text="Send"
+        android:textColor="@android:color/white"
+        android:background="@drawable/buttonshapesmall"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editEmailMessage" />
 </androidx.constraintlayout.widget.ConstraintLayout>

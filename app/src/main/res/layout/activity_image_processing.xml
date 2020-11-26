@@ -61,4 +61,12 @@
         android:text="custom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnViewRedness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Redness"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="510dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

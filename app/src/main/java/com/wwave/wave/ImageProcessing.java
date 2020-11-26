@@ -6,6 +6,7 @@ import androidx.core.content.FileProvider;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -109,11 +111,14 @@ public class ImageProcessing extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d(TAG,"entering onActivityResult");
-
+        BigDecimal rednessVal = new BigDecimal(0);  // Succeeds
         //handle case for thumbnail image only
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+
+
             thumbnail.setImageBitmap(imageBitmap);
         }
 
@@ -140,12 +145,21 @@ public class ImageProcessing extends AppCompatActivity {
             BigDecimal part1 = BigDecimal.valueOf(totalRed);
             BigDecimal part2 = BigDecimal.valueOf(height*width*255);
             BigDecimal part3 = part1.divide(part2,5,BigDecimal.ROUND_HALF_DOWN);
-            String display =  (BigDecimal.valueOf(totalRed * 100).divide(BigDecimal.valueOf((long)height*(long)width*255),6, RoundingMode.HALF_DOWN)).toPlainString() + " % Red";
+            rednessVal = (BigDecimal.valueOf(totalRed * 100).divide(BigDecimal.valueOf((long)height*(long)width*255),6, RoundingMode.HALF_DOWN));
+            String display =  rednessVal.toPlainString() + " % Red";
             filename.setText(display);
             Log.d(TAG,part1.toPlainString());
             Log.d(TAG,part2.toPlainString());
             Log.d(TAG,part3.toPlainString());
         }
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putLong("rednessScore", rednessVal.longValue());
+
+        // Apply the edits!
+        editor.apply();
+
         Log.d(TAG,"exit onActivityResult");
 
     }
