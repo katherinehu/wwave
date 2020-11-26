@@ -6,8 +6,12 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -87,7 +91,7 @@ public class Homee extends AppCompatActivity implements View.OnClickListener {
             Request request = new Request.Builder()
                     .url("https://api.openuv.io/api/v1/uv?lat=-33.34&lng=115.342&dt=2018-01-24T10%3A50%3A52.283Z")
                     .get()
-                    .addHeader("x-access-token", "2d68077ff5a271166cf9979e619ae1f1")
+                    .addHeader("x-access-token", "0b1d3edc053bf726a35cddde61beb687")
                     .build();
 
 
@@ -97,8 +101,17 @@ public class Homee extends AppCompatActivity implements View.OnClickListener {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Headers headers = response.headers();
-            String stringResponse = response.body().toString();
+
+//            Headers headers = response.headers();
+//            String stringResponse = response.body().toString();
+            JSONObject responseObj = null;
+            try {
+                responseObj = new JSONObject(response.body().string());
+                System.out.println("here");
+            } catch (JSONException | IOException e) {
+                e.printStackTrace();
+            }
+            responseObj.getJSONObject("uv").getDouble();
             int e = 6;
             return null;
         }
