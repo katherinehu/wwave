@@ -63,6 +63,15 @@ public class Homee extends AppCompatActivity implements View.OnClickListener{
 
     public void getUV() {
 
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://api.openuv.io/api/v1/uv?lat=-33.34&lng=115.342&dt=2018-01-24T10%3A50%3A52.283Z")
+                .get()
+                .addHeader("x-access-token", "2d68077ff5a271166cf9979e619ae1f1")
+                .build();
+
+        Response response = client.newCall(request).execute();
 
 //        Document doc;
 //
