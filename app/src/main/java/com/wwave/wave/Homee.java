@@ -62,16 +62,18 @@ public class Homee extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void getUV() {
-        Document doc;
 
-        try {
-            doc = Jsoup.connect("https://www.vogella.com/").get();
 
-            Element element = doc.select("div[aria-live]").first();
-            uvIndex.setText(element.text());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        Document doc;
+//
+//        try {
+//            doc = Jsoup.connect("https://www.vogella.com/").get();
+//
+//            Element element = doc.select("div[aria-live]").first();
+//            uvIndex.setText(element.text());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
 
