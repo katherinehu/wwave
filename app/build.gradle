@@ -10,9 +10,15 @@ allprojects {
         jcenter()
     }
 }
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
+
+    compileOptions {
+        targetCompatibility = "8"
+        sourceCompatibility = "8"
+    }
 
     defaultConfig {
         applicationId "com.wwave.wave"
@@ -42,7 +48,7 @@ android {
 dependencies {
     implementation 'com.google.android.material:material:1.2.0'
     implementation 'org.jsoup:jsoup:1.10.3'
-    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.5.0'
 
 
     //pretty
