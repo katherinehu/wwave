@@ -144,7 +144,10 @@ public class AccelActivity extends Activity implements SensorEventListener {
             public void onClick(View v) {
                 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor edit = pref.edit();
-                edit.putString("accel" + pref.getAll().size(), String.valueOf(totalMovement));
+                int size = pref.getInt("numberAccelAdded",0);
+                edit.putString("accel" + size, String.valueOf(totalMovement));
+                ++size;
+                edit.putInt("numberAccelAdded",size);
                 edit.apply();
             }
         });
@@ -153,8 +156,9 @@ public class AccelActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                int size = pref.getInt("numberAccelAdded",0);
                 String s = "";
-                for (int i = 1; i <= pref.getAll().size(); ++i) {
+                for (int i = 1; i <= size; ++i) {
                     s += (pref.getInt("accel" + i, 0)) + "\n";
                 }
                 tvData.setText(s);
