@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,6 +51,10 @@ public class UVSkin extends AppCompatActivity {
     TextView tvBurnTime;
     Button btnBurnTime;
 
+    EditText etLongitude;
+    EditText etLatitude;
+
+    String skinTypeGlobal;
 
     final int TAKE_PICTURE = 1235;
 
@@ -65,6 +70,8 @@ public class UVSkin extends AppCompatActivity {
         tvEstimatedSkin = findViewById(R.id.tvEstimatedSkin);
         tvBurnTime = findViewById(R.id.tvBurnTime);
         btnBurnTime = findViewById(R.id.btnBurnTime);
+        etLongitude = findViewById(R.id.editLongitude);
+        etLatitude = findViewById(R.id.editLatitude);
 
         //Ask for permission from the user to use the camera if the permission wasnt granted
         if(!allPermissionsGranted()){
@@ -85,21 +92,7 @@ public class UVSkin extends AppCompatActivity {
         btnBurnTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //new getUV().execute();
-                SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                String jsonString = data.getString("resultUV","you messed up");
-                try {
-                    JSONObject info = new JSONObject(jsonString);
-                    JSONObject result = info.getJSONObject("result");
-                    JSONObject safe_exposure_time = result.getJSONObject("safe_exposure_time");
-                    int exposure_time = safe_exposure_time.getInt("st1");
-                    String displayText = "Today's UV is (include): With skin type I your safe exposure time today is " + exposure_time + " minutes.";
-                    tvBurnTime.setText(displayText);
-                    int e = 6;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+                new getUV().execute(skinTypeGlobal, etLatitude.getText().toString(),etLongitude.getText().toString());
             }
         });
     }
@@ -107,10 +100,14 @@ public class UVSkin extends AppCompatActivity {
     class getUV extends AsyncTask<String,String,String> {
         @Override
         protected String doInBackground(String... strings) {
-            OkHttpClient client = new OkHttpClient();
+            String st = strings[0];
+            String latitude = strings[1];
+            String longitude = strings[2];
 
+            OkHttpClient client = new OkHttpClient();
+            String myUrl = "https://api.openuv.io/api/v1/uv?lat=" + latitude + "&lng=" + longitude;
             Request request = new Request.Builder()
-                    .url("https://api.openuv.io/api/v1/uv?lat=-33.34&lng=115.342&dt=2018-01-24T10%3A50%3A52.283Z")
+                    .url(myUrl)
                     .get()
                     .addHeader("x-access-token", "0b1d3edc053bf726a35cddde61beb687")
                     .build();
@@ -123,6 +120,7 @@ public class UVSkin extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+
             JSONObject responseObj = null;
             try {
                 responseObj = new JSONObject(response.body().string());
@@ -131,11 +129,26 @@ public class UVSkin extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            SharedPreferences.Editor editor = data.edit();
-            editor.putString("resultUV",responseObj.toString());
-            editor.commit();
-            return "temporary";
+
+            try {
+                JSONObject result = responseObj.getJSONObject("result");
+                JSONObject safe_exposure_time = result.getJSONObject("safe_exposure_time");
+                double curUV = result.getDouble("uv");
+
+                int exposure_time = safe_exposure_time.getInt(st);
+
+                String displayText = "Today's UV is" + curUV +  ". With skin type, your safe exposure time today is " + exposure_time + " minutes.";
+                return displayText;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+//            SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//            SharedPreferences.Editor editor = data.edit();
+//            editor.putString("resultUV",responseObj.toString());
+//            editor.commit();
+//            return "temporary";
 
 //            try {
 //                final int burnTime = responseObj.getJSONObject("result").getJSONObject("safe_exposure_time").getInt("st1");
@@ -144,12 +157,14 @@ public class UVSkin extends AppCompatActivity {
 //                e.printStackTrace();
 //            }
 //            return null;
+            return st;
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             tvBurnTime.setText(s);
+
         }
     }
 
@@ -226,21 +241,27 @@ public class UVSkin extends AppCompatActivity {
                         switch (currentSmallest) {
                             case 0:
                                 tvEstimatedSkin.setText("Your skin type: I");
+                                skinTypeGlobal = "st1";
                                 break;
                             case 1:
                                 tvEstimatedSkin.setText("Your skin type: II");
+                                skinTypeGlobal = "st2";
                                 break;
                             case 2:
                                 tvEstimatedSkin.setText("Your skin type: III");
+                                skinTypeGlobal = "st3";
                                 break;
                             case 3:
                                 tvEstimatedSkin.setText("Your skin type: IV");
+                                skinTypeGlobal = "st4";
                                 break;
                             case 4:
                                 tvEstimatedSkin.setText("Your skin type: V");
+                                skinTypeGlobal = "st5";
                                 break;
                             case 5:
                                 tvEstimatedSkin.setText("Your skin type: VI");
+                                skinTypeGlobal = "st6";
                                 break;
                         }
                      }
