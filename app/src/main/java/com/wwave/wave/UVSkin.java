@@ -56,7 +56,7 @@ public class UVSkin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_u_v_skin);
 
-        //Declare ui elements
+        //Declare ui element
         btnTakePhoto = findViewById(R.id.btnTakePhoto);
         displayColor = findViewById(R.id.displayColor);
         ivSkinPreview = findViewById(R.id.ivSkinPreview);
