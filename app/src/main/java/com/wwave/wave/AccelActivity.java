@@ -31,6 +31,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
     Button btnStop;
     Button btnSave;
     Button btnRetrieve;
+    TextView tvData;
 
     EditText nameLine;
     private double maxYVal = 0;
@@ -135,13 +136,16 @@ public class AccelActivity extends Activity implements SensorEventListener {
 
         btnSave = findViewById(R.id.btnSave);
         btnRetrieve = findViewById(R.id.btnRetrieve);
+        tvData = findViewById(R.id.tv_Data);
+
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor edit = pref.edit();
-                edit.putInt("accel" + pref.getAll().size(), Integer.parseInt(String.valueOf(totalMovement)));
+                edit.putString("accel" + pref.getAll().size(), String.valueOf(totalMovement));
+                edit.apply();
             }
         });
 
@@ -149,8 +153,11 @@ public class AccelActivity extends Activity implements SensorEventListener {
             @Override
             public void onClick(View v) {
                 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                pref.getInt()
-
+                String s = "";
+                for (int i = 1; i <= pref.getAll().size(); ++i) {
+                    s += (pref.getInt("accel" + i, 0)) + "\n";
+                }
+                tvData.setText(s);
             }
         });
 

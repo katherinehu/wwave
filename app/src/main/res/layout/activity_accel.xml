@@ -95,9 +95,11 @@
         android:id="@+id/tv_Data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="244dp"
+        android:layout_marginTop="208dp"
         android:text="Data"
-        app:layout_constraintTop_toBottomOf="@+id/gv_Movement"
-        tools:layout_editor_absoluteX="242dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toEndOf="@+id/btnSave"
+        app:layout_constraintTop_toBottomOf="@+id/gv_Movement" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
