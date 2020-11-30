@@ -118,17 +118,25 @@
             android:text="Estimated Burn Time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button3" />
+            app:layout_constraintTop_toBottomOf="@+id/btnBurnTime" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btnBurnTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Button"
+            android:text="Find Burn Time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editLatitude" />
+
+        <TextView
+            android:id="@+id/tvBurnTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Burn Time"
+            tools:layout_editor_absoluteX="167dp"
+            tools:layout_editor_absoluteY="1100dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

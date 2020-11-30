@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -20,8 +21,16 @@ import android.widget.TextView;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import static com.wwave.wave.ImageProcessing.REQUEST_IMAGE_CAPTURE;
 import static com.wwave.wave.ImageProcessing.REQUEST_TAKE_PHOTO;
@@ -36,6 +45,9 @@ public class UVSkin extends AppCompatActivity {
     Button btnTakePhoto;
     ImageView ivSkinPreview;
     TextView tvEstimatedSkin;
+    TextView tvBurnTime;
+    Button btnBurnTime;
+
 
     final int TAKE_PICTURE = 1235;
 
@@ -48,6 +60,8 @@ public class UVSkin extends AppCompatActivity {
         btnTakePhoto = findViewById(R.id.btnTakePhoto);
         ivSkinPreview = findViewById(R.id.ivSkinPreview);
         tvEstimatedSkin = findViewById(R.id.tvEstimatedSkin);
+        tvBurnTime = findViewById(R.id.tvBurnTime);
+        btnBurnTime = findViewById(R.id.btnBurnTime);
 
         //Ask for permission from the user to use the camera if the permission wasn't granted
         if(!allPermissionsGranted()){
@@ -62,6 +76,19 @@ public class UVSkin extends AppCompatActivity {
             public void onClick(View view) {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, TAKE_PICTURE);
+            }
+        });
+
+        btnBurnTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    String result = new getUV().execute().get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -157,6 +184,48 @@ public class UVSkin extends AppCompatActivity {
 
                 }
                 break;
+        }
+    }
+
+
+
+    public class getUV extends AsyncTask<String,String,String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url("https://api.openuv.io/api/v1/uv?lat=-33.34&lng=115.342&dt=2018-01-24T10%3A50%3A52.283Z")
+                    .get()
+                    .addHeader("x-access-token", "0b1d3edc053bf726a35cddde61beb687")
+                    .build();
+
+
+            Response response = null;
+            try {
+                response = client.newCall(request).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            JSONObject responseObj = null;
+            try {
+                responseObj = new JSONObject(response.body().string());
+                System.out.println("here");
+            } catch (JSONException | IOException e) {
+                e.printStackTrace();
+            }
+
+            double burnTime = 0;
+            try {
+                burnTime = responseObj.getJSONObject("result").getInt("safe_exposure_time.st1");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String uv = Double.toString(burnTime);
+            tvBurnTime.setText(uv);
+            return null;
         }
     }
 
