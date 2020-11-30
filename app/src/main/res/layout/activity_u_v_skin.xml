@@ -89,24 +89,30 @@
 
         <EditText
             android:id="@+id/editLongitude"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
             android:ems="10"
-            android:hint="Longitude"
-            android:inputType="numberDecimal"
+            android:hint="Longitude (-180.00 to 180.00)"
+            android:inputType="numberSigned|numberDecimal"
+            android:numeric="signed"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
         <EditText
             android:id="@+id/editLatitude"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
             android:ems="10"
-            android:hint="Latitude"
-            android:inputType="numberDecimal"
+            android:hint="Latitude (-90.00 to 90.00)"
+            android:inputType="numberSigned|numberDecimal"
+            android:numeric="signed"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editLongitude" />

@@ -109,9 +109,11 @@ public class UVSkin extends AppCompatActivity {
             Request request = new Request.Builder()
                     .url(myUrl)
                     .get()
-                    .addHeader("x-access-token", "0b1d3edc053bf726a35cddde61beb687")
+                    .addHeader("x-access-token", "8f94e4f9eac076b93bba4032bfbeede5")
                     .build();
 
+            // Katherine key: 0b1d3edc053bf726a35cddde61beb687
+            // Patrick key: 8f94e4f9eac076b93bba4032bfbeede5
 
             Response response = null;
             try {
