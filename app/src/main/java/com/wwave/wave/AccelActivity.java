@@ -148,7 +148,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
                 edit.putString("accel" + size, String.valueOf(totalMovement));
                 ++size;
                 edit.putInt("numberAccelAdded",size);
-                edit.apply();
+                edit.commit();
             }
         });
 
@@ -158,8 +158,8 @@ public class AccelActivity extends Activity implements SensorEventListener {
                 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 int size = pref.getInt("numberAccelAdded",0);
                 String s = "";
-                for (int i = 1; i <= size; ++i) {
-                    s += (pref.getInt("accel" + i, 0)) + "\n";
+                for (int i = 0; i < size; ++i) {
+                    s += (pref.getString("accel" + i, "0")) + "\n";
                 }
                 tvData.setText(s);
             }
