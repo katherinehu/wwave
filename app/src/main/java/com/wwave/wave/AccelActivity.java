@@ -4,6 +4,7 @@ package com.wwave.wave;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -11,6 +12,7 @@ import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +29,9 @@ public class AccelActivity extends Activity implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor mAccelerometer;
     Button btnStop;
+    Button btnSave;
+    Button btnRetrieve;
+
     EditText nameLine;
     private double maxYVal = 0;
     public float x = 0;
@@ -126,6 +131,30 @@ public class AccelActivity extends Activity implements SensorEventListener {
             }
         }.start();
         //endregion
+
+
+        btnSave = findViewById(R.id.btnSave);
+        btnRetrieve = findViewById(R.id.btnRetrieve);
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor edit = pref.edit();
+                edit.putInt("accel" + pref.getAll().size(), Integer.parseInt(String.valueOf(totalMovement)));
+            }
+        });
+
+        btnRetrieve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                pref.getInt()
+
+            }
+        });
+
+
 
         btnStop = findViewById(R.id.btnStop);
         btnStop.setOnClickListener(new View.OnClickListener() {
