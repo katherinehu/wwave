@@ -36,6 +36,7 @@ public class UVSkin extends AppCompatActivity {
     Button btnTakePhoto, displayColor;
     ImageView ivSkinPreview;
     TextView tvEstimatedSkin;
+    //
 
     final int TAKE_PICTURE = 1235;
 
