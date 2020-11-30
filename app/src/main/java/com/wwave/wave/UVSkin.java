@@ -133,11 +133,10 @@ public class UVSkin extends AppCompatActivity {
             try {
                 JSONObject result = responseObj.getJSONObject("result");
                 JSONObject safe_exposure_time = result.getJSONObject("safe_exposure_time");
-                double curUV = result.getDouble("uv");
-
                 int exposure_time = safe_exposure_time.getInt(st);
 
-                String displayText = "Today's UV is" + curUV +  ". With skin type, your safe exposure time today is " + exposure_time + " minutes.";
+                double curUV = result.getDouble("uv");
+                String displayText = "Today's UV is " + curUV +  ". With skin type, your safe exposure time today is " + exposure_time + " minutes.";
                 return displayText;
             } catch (JSONException e) {
                 e.printStackTrace();
