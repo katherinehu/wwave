@@ -49,10 +49,11 @@
 
         <ImageView
             android:id="@+id/ivSkinPreview"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/displayColor"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnTakePhoto"
             app:srcCompat="@drawable/ic_baseline_camera_alt_24" />
@@ -80,7 +81,7 @@
             android:id="@+id/textView10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="67dp"
+            android:layout_marginTop="16dp"
             android:text="Enter your location to calculate burn time:"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -111,10 +112,10 @@
             app:layout_constraintTop_toBottomOf="@+id/editLongitude" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/tvBurnTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="16dp"
             android:text="Estimated Burn Time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -130,13 +131,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editLatitude" />
 
-        <TextView
-            android:id="@+id/tvBurnTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Burn Time"
-            tools:layout_editor_absoluteX="167dp"
-            tools:layout_editor_absoluteY="1100dp" />
+        <Button
+            android:id="@+id/displayColor"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="16dp"
+            android:text="Your Skin Color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivSkinPreview"
+            app:layout_constraintTop_toBottomOf="@+id/btnTakePhoto" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

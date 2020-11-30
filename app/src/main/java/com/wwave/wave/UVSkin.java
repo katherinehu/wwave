@@ -6,12 +6,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -83,15 +85,72 @@ public class UVSkin extends AppCompatActivity {
         btnBurnTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //new getUV().execute();
+                SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                String jsonString = data.getString("resultUV","you messed up");
                 try {
-                    String result = new getUV().execute().get();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                    JSONObject info = new JSONObject(jsonString);
+                    JSONObject result = info.getJSONObject("result");
+                    JSONObject safe_exposure_time = result.getJSONObject("safe_exposure_time");
+                    int exposure_time = safe_exposure_time.getInt("st1");
+                    String displayText = "Today's UV is (include): With skin type I your safe exposure time today is " + exposure_time + " minutes.";
+                    tvBurnTime.setText(displayText);
+                    int e = 6;
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
         });
+    }
+
+    class getUV extends AsyncTask<String,String,String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url("https://api.openuv.io/api/v1/uv?lat=-33.34&lng=115.342&dt=2018-01-24T10%3A50%3A52.283Z")
+                    .get()
+                    .addHeader("x-access-token", "0b1d3edc053bf726a35cddde61beb687")
+                    .build();
+
+
+            Response response = null;
+            try {
+                response = client.newCall(request).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            JSONObject responseObj = null;
+            try {
+                responseObj = new JSONObject(response.body().string());
+                System.out.println("here");
+            } catch (JSONException | IOException e) {
+                e.printStackTrace();
+            }
+
+            SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = data.edit();
+            editor.putString("resultUV",responseObj.toString());
+            editor.commit();
+            return "temporary";
+
+//            try {
+//                final int burnTime = responseObj.getJSONObject("result").getJSONObject("safe_exposure_time").getInt("st1");
+//                return Integer.toString(burnTime);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            tvBurnTime.setText(s);
+        }
     }
 
     @Override
@@ -191,47 +250,6 @@ public class UVSkin extends AppCompatActivity {
         }
     }
 
-
-
-    public class getUV extends AsyncTask<String,String,String> {
-
-        @Override
-        protected String doInBackground(String... strings) {
-            OkHttpClient client = new OkHttpClient();
-
-            Request request = new Request.Builder()
-                    .url("https://api.openuv.io/api/v1/uv?lat=-33.34&lng=115.342&dt=2018-01-24T10%3A50%3A52.283Z")
-                    .get()
-                    .addHeader("x-access-token", "0b1d3edc053bf726a35cddde61beb687")
-                    .build();
-
-
-            Response response = null;
-            try {
-                response = client.newCall(request).execute();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            JSONObject responseObj = null;
-            try {
-                responseObj = new JSONObject(response.body().string());
-                System.out.println("here");
-            } catch (JSONException | IOException e) {
-                e.printStackTrace();
-            }
-
-            double burnTime = 0;
-            try {
-                burnTime = responseObj.getJSONObject("result").getInt("safe_exposure_time.st1");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            String uv = Double.toString(burnTime);
-            tvBurnTime.setText(uv);
-            return null;
-        }
-    }
 
     //Check to see if user has allowed camera use
     private boolean allPermissionsGranted(){
