@@ -1,0 +1,217 @@
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\n  <component name=\"GradleSettings\">\n    <option name=\"linkedExternalProjectsSettings\">\n      <GradleProjectSettings>\n        <option name=\"testRunner\" value=\"PLATFORM\" />\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\n        <option name=\"gradleJvm\" value=\"1.8\" />\n        <option name=\"modules\">\n          <set>\n            <option value=\"$PROJECT_DIR$\" />\n            <option value=\"$PROJECT_DIR$/app\" />\n          </set>\n        </option>\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\n      </GradleProjectSettings>\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision c7644a20c7a29ec6d964b8a4b606bd8d8eae4015)
++++ .idea/gradle.xml	(date 1606714182000)
+@@ -15,6 +15,7 @@
+           </set>
+         </option>
+         <option name="resolveModulePerSourceSet" value="false" />
++        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+   </component>
+Index: app/src/main/java/com/wwave/wave/AccelActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.wwave.wave;\n\n\nimport android.app.Activity;\nimport android.content.Context;\nimport android.content.Intent;\nimport android.hardware.Sensor;\nimport android.hardware.SensorEvent;\nimport android.hardware.SensorEventListener;\nimport android.hardware.SensorManager;\nimport android.net.Uri;\nimport android.os.AsyncTask;\nimport android.os.Bundle;\nimport android.os.SystemClock;\nimport android.view.View;\nimport android.widget.Button;\nimport android.widget.EditText;\nimport android.widget.TextView;\n\nimport androidx.appcompat.app.ActionBar;\n\nimport com.jjoe64.graphview.GraphView;\nimport com.jjoe64.graphview.Viewport;\nimport com.jjoe64.graphview.series.DataPoint;\nimport com.jjoe64.graphview.series.LineGraphSeries;\n\nimport java.math.BigDecimal;\nimport java.math.RoundingMode;\nimport java.text.BreakIterator;\nimport java.util.ArrayList;\n\npublic class AccelActivity extends Activity implements SensorEventListener {\n    private SensorManager sensorManager;\n    private Sensor mAccelerometer;\n    Button btnStop;\n    EditText nameLine;\n    private double maxYVal = 0;\n    public float x = 0;\n    public float y = 0;\n    public float z = 0;\n    public boolean collectData = true;\n    public double totalMovement = 0;\n\n    TextView movement;\n    GraphView gv_Movement;\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_accel);\n\n        movement = findViewById(R.id.tvTotalMovement);\n        gv_Movement = findViewById(R.id.gv_Movement);\n        nameLine = (EditText) findViewById(R.id.etEmailAdd);\n\n        //Adjust the graph so it doesn't move around randomly\n        gv_Movement.getViewport().setYAxisBoundsManual(true);\n        gv_Movement.getViewport().setXAxisBoundsManual(true);\n        gv_Movement.getViewport().setMaxY(maxYVal);\n        gv_Movement.getViewport().setMinY(0);\n        gv_Movement.getViewport().setMaxX(200);\n        gv_Movement.getViewport().setMinX(0);\n\n\n        //check movement\n        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);\n        mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);\n\n        //Store movement data in a plottable object\n        final LineGraphSeries<DataPoint>[] allMovements = new LineGraphSeries[]{new LineGraphSeries<>()};\n\n        //region update data thread\n        new Thread() {\n            @Override\n            public void run() {\n                int xPrecision = 1;\n                int yPrecision = 1;\n                int zPrecision = 1;\n                //20 hz of sampling rate\n                int samplingRate = 20;\n                try {\n                    Thread.sleep(50);\n                } catch (InterruptedException e) {\n                    e.printStackTrace();\n                }\n                double prevX = Round(x,xPrecision);\n                double prevY = Round(y,yPrecision);\n                double prevZ = Round(z,zPrecision);\n                double prevAccel = Math.sqrt((prevX * prevX) + (prevY * prevY) + (prevZ * prevZ));\n                long sleepTime = (long)(1000/(double)samplingRate);\n                int counter = 1;\n                while(collectData) {\n                    double currentX = Round(x,xPrecision);\n                    double currentY = Round(y,yPrecision);\n                    double currentZ = Round(z,zPrecision);\n                    double currentAccel = Math.sqrt((currentX * currentX) + (currentY * currentY) + (currentZ * currentZ));\n                    totalMovement += Math.abs(currentAccel - prevAccel);\n                    prevAccel = currentAccel;\n                    String display = \"Total Movement: \" + Round((float) totalMovement,Math.max(zPrecision,Math.max(xPrecision,yPrecision)));\n                    new update().execute(display);\n                    try {\n                        Thread.sleep(sleepTime);\n                    } catch (InterruptedException e) {\n                        e.printStackTrace();\n                    }\n\n                    //adjust range dynamically\n                    if (currentAccel > maxYVal){\n                        maxYVal = currentAccel;\n                        gv_Movement.getViewport().setMaxY(maxYVal*1.1);\n                    }\n\n                    //add new movements to the object\n                    allMovements[0].appendData(new DataPoint(counter,currentAccel),true,1000,true);\n                    counter++;\n\n                    //Need to clear it periodically or else it runs out of memory and crashes\n                    if (counter % 10 == 0) {\n                        gv_Movement.removeAllSeries();\n                        gv_Movement.addSeries(allMovements[0]);\n                    }\n\n                    //Every so often refresh the plot so it doesn't get all compressed after longer periods\n                    if (counter % 200 == 0) {\n                        allMovements[0] = new LineGraphSeries<>();\n                        gv_Movement.getViewport().setMaxX(counter + 200);\n                        gv_Movement.getViewport().setMinX(counter);\n\n                    }\n\n                }\n            }\n        }.start();\n        //endregion\n\n        btnStop = findViewById(R.id.btnStop);\n        btnStop.setOnClickListener(new View.OnClickListener() {\n            @Override\n            public void onClick(View v) {\n\n                collectData = false;\n                String messageToSend = Double.toString(totalMovement);\n                final Intent intent = new Intent(Intent.ACTION_SENDTO);\n                String recipientList = nameLine.getText().toString();\n                String [] recipients = recipientList.split(\",\");\n                String subject = \"Here is the movement you want:\";\n                intent.setData(Uri.parse(\"mailto:\"));\n                intent.putExtra(intent.EXTRA_EMAIL, recipients);\n                intent.putExtra(intent.EXTRA_SUBJECT, subject);\n                intent.putExtra(intent.EXTRA_TEXT, messageToSend);\n                startActivity(intent);\n            }\n\n        });\n\n    }\n\n    //Use this to update the textview from inside a thread, maybe not the best possible way to do this, but it definitely works.\n    class update extends AsyncTask<String,Void,String> {\n\n        @Override\n        protected String doInBackground(String... strings) {\n            return strings[0];\n        }\n\n        @Override\n        protected void onPostExecute(String s) {\n            super.onPostExecute(s);\n            movement.setText(s);\n        }\n    }\n\n    @Override\n    public final void onAccuracyChanged(Sensor sensor, int accuracy) {\n        // Do something here if sensor accuracy changes.\n    }\n\n    @Override\n    public final void onSensorChanged(SensorEvent event) {\n        // The light sensor returns a single value.\n        // Many sensors return 3 values, one for each axis.\n        float ax = event.values[0];\n        float ay = event.values[1];\n        float az = event.values[2];\n        x = ax;\n        y = ay;\n        z = az;\n    }\n\n    @Override\n    protected void onResume() {\n        super.onResume();\n        sensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);\n    }\n\n    @Override\n    protected void onPause() {\n        super.onPause();\n        sensorManager.unregisterListener(this);\n    }\n\n    public double Round(float input,int scale) {\n        BigDecimal bd = BigDecimal.valueOf(input);\n        bd = bd.setScale(scale, RoundingMode.HALF_UP);\n        return bd.doubleValue();\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/wwave/wave/AccelActivity.java	(revision c7644a20c7a29ec6d964b8a4b606bd8d8eae4015)
++++ app/src/main/java/com/wwave/wave/AccelActivity.java	(date 1606716015000)
+@@ -4,6 +4,7 @@
+ import android.app.Activity;
+ import android.content.Context;
+ import android.content.Intent;
++import android.content.SharedPreferences;
+ import android.hardware.Sensor;
+ import android.hardware.SensorEvent;
+ import android.hardware.SensorEventListener;
+@@ -12,6 +13,8 @@
+ import android.os.AsyncTask;
+ import android.os.Bundle;
+ import android.os.SystemClock;
++import android.preference.PreferenceManager;
++import android.util.Log;
+ import android.view.View;
+ import android.widget.Button;
+ import android.widget.EditText;
+@@ -28,11 +31,16 @@
+ import java.math.RoundingMode;
+ import java.text.BreakIterator;
+ import java.util.ArrayList;
++import java.util.Map;
+ 
+ public class AccelActivity extends Activity implements SensorEventListener {
+     private SensorManager sensorManager;
+     private Sensor mAccelerometer;
+     Button btnStop;
++    Button btnSave;
++    Button btnRetrieve;
++    TextView tv_Data;
++
+     EditText nameLine;
+     private double maxYVal = 0;
+     public float x = 0;
+@@ -133,6 +141,36 @@
+         }.start();
+         //endregion
+ 
++        tv_Data = findViewById(R.id.tv_Data);
++
++        btnRetrieve = findViewById(R.id.btnRetrieve);
++        btnRetrieve.setOnClickListener(new View.OnClickListener() {
++           @Override
++           public void onClick(View v) {
++               String s = "";
++               SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
++               Map<String, ?> allEntries = pref.getAll();
++               for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
++                   s += "map values" + entry.getKey() + ": " + entry.getValue().toString();
++               }
++               tv_Data.setText(s);
++
++           }
++        });
++
++        btnSave = findViewById(R.id.btnSave);
++        btnSave.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
++                SharedPreferences.Editor accelStorage = pref.edit();
++                accelStorage.putInt("acceleration " + pref.getAll().size(), Integer.parseInt(String.valueOf(totalMovement)));
++
++                // Apply the edits!
++                accelStorage.apply();
++            }
++        });
++
+         btnStop = findViewById(R.id.btnStop);
+         btnStop.setOnClickListener(new View.OnClickListener() {
+             @Override
+Index: app/src/main/res/layout/activity_accel.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\"\n    tools:context=\".AccelActivity\">\n\n    <TextView\n        android:id=\"@+id/tvTotalMovement\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:layout_marginTop=\"24dp\"\n        android:fontFamily=\"@font/roboto_black\"\n        android:text=\"Movement so far: 0\"\n        android:textColor=\"@android:color/black\"\n        android:textSize=\"25dp\"\n        app:layout_constraintLeft_toLeftOf=\"parent\"\n        app:layout_constraintRight_toRightOf=\"parent\"\n        app:layout_constraintTop_toTopOf=\"parent\" />\n\n    <com.jjoe64.graphview.GraphView\n        android:id=\"@+id/gv_Movement\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"200dip\"\n        android:layout_marginTop=\"44dp\"\n        android:elevation=\"5dp\"\n        app:layout_constraintEnd_toEndOf=\"parent\"\n        app:layout_constraintHorizontal_bias=\"0.0\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toBottomOf=\"@+id/tvTotalMovement\">\n\n    </com.jjoe64.graphview.GraphView>\n\n    <EditText\n        android:id=\"@+id/etEmailAdd\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:layout_marginTop=\"24dp\"\n        android:ems=\"10\"\n        android:fontFamily=\"@font/roboto_black\"\n        android:hint=\"Enter Email Address\"\n        android:inputType=\"textPersonName\"\n        app:layout_constraintEnd_toEndOf=\"parent\"\n        app:layout_constraintHorizontal_bias=\"0.079\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toBottomOf=\"@+id/txtEmailInfo\" />\n\n    <TextView\n        android:id=\"@+id/txtEmailInfo\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:layout_marginTop=\"16dp\"\n        android:fontFamily=\"@font/roboto_black\"\n        android:text=\"Email Info\"\n        app:layout_constraintEnd_toEndOf=\"parent\"\n        app:layout_constraintHorizontal_bias=\"0.046\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toBottomOf=\"@+id/gv_Movement\" />\n\n    <Button\n        android:id=\"@+id/btnStop\"\n        android:layout_width=\"200dp\"\n        android:layout_height=\"wrap_content\"\n        android:layout_marginTop=\"24dp\"\n        android:background=\"@drawable/buttonshape\"\n        android:elevation=\"5dp\"\n        android:text=\"Stop and Email Result\"\n        android:textColor=\"@android:color/white\"\n        android:visibility=\"visible\"\n        app:layout_constraintEnd_toEndOf=\"parent\"\n        app:layout_constraintHorizontal_bias=\"0.075\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toBottomOf=\"@+id/etEmailAdd\" />\n\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_accel.xml	(revision c7644a20c7a29ec6d964b8a4b606bd8d8eae4015)
++++ app/src/main/res/layout/activity_accel.xml	(date 1606716092000)
+@@ -36,7 +36,7 @@
+         android:id="@+id/etEmailAdd"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginTop="24dp"
++        android:layout_marginTop="16dp"
+         android:ems="10"
+         android:fontFamily="@font/roboto_black"
+         android:hint="Enter Email Address"
+@@ -46,23 +46,11 @@
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/txtEmailInfo" />
+ 
+-    <TextView
+-        android:id="@+id/txtEmailInfo"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:layout_marginTop="16dp"
+-        android:fontFamily="@font/roboto_black"
+-        android:text="Email Info"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.046"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/gv_Movement" />
+-
+     <Button
+         android:id="@+id/btnStop"
+         android:layout_width="200dp"
+         android:layout_height="wrap_content"
+-        android:layout_marginTop="24dp"
++        android:layout_marginTop="32dp"
+         android:background="@drawable/buttonshape"
+         android:elevation="5dp"
+         android:text="Stop and Email Result"
+@@ -73,4 +61,43 @@
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/etEmailAdd" />
+ 
++    <TextView
++        android:id="@+id/txtEmailInfo"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="12dp"
++        android:fontFamily="@font/roboto_black"
++        android:text="Email Info"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.046"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/gv_Movement" />
++
++    <Button
++        android:id="@+id/btnSave"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="32dp"
++        android:text="Save Movement"
++        app:layout_constraintTop_toBottomOf="@+id/btnStop"
++        tools:layout_editor_absoluteX="17dp" />
++
++    <Button
++        android:id="@+id/btnRetrieve"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="24dp"
++        android:text="Retrieve Past Accel"
++        app:layout_constraintTop_toBottomOf="@+id/btnSave"
++        tools:layout_editor_absoluteX="17dp" />
++
++    <TextView
++        android:id="@+id/tv_Data"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="244dp"
++        android:text="Data"
++        app:layout_constraintTop_toBottomOf="@+id/gv_Movement"
++        tools:layout_editor_absoluteX="242dp" />
++
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\n  </component>\n  <component name=\"ProjectType\">\n    <option name=\"id\" value=\"Android\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision c7644a20c7a29ec6d964b8a4b606bd8d8eae4015)
++++ .idea/misc.xml	(date 1606714207000)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(date 1606714208000)
++++ .idea/compiler.xml	(date 1606714208000)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="1.8" />
++  </component>
++</project>
+\ No newline at end of file
