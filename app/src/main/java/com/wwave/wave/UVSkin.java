@@ -33,7 +33,7 @@ public class UVSkin extends AppCompatActivity {
             "android.permission.WRITE_EXTERNAL_STORAGE"};
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
 
-    Button btnTakePhoto;
+    Button btnTakePhoto, displayColor;
     ImageView ivSkinPreview;
     TextView tvEstimatedSkin;
 
@@ -46,6 +46,7 @@ public class UVSkin extends AppCompatActivity {
 
         //Declare ui elements
         btnTakePhoto = findViewById(R.id.btnTakePhoto);
+        displayColor = findViewById(R.id.displayColor);
         ivSkinPreview = findViewById(R.id.ivSkinPreview);
         tvEstimatedSkin = findViewById(R.id.tvEstimatedSkin);
 
@@ -113,6 +114,9 @@ public class UVSkin extends AppCompatActivity {
                         int red = (int)(totalRed/(height*width));
                         int green = (int)(totalGreen/(height*width));
                         int blue = (int)(totalBlue/(height*width));
+
+                        //Make the button this color so the user can see
+                        displayColor.setBackgroundColor(Color.rgb(red,green,blue));
 
                         ArrayList<Integer> differences = new ArrayList<>();
                         for (int[] types: skinTypes){

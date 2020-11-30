@@ -49,10 +49,12 @@
 
         <ImageView
             android:id="@+id/ivSkinPreview"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/displayColor"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnTakePhoto"
             app:srcCompat="@drawable/ic_baseline_camera_alt_24" />
@@ -129,6 +131,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editLatitude" />
+
+        <Button
+            android:id="@+id/displayColor"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginEnd="16dp"
+            android:text="Average Color"
+            app:layout_constraintBottom_toTopOf="@+id/tvEstimatedSkin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/ivSkinPreview"
+            app:layout_constraintTop_toBottomOf="@+id/btnTakePhoto" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
