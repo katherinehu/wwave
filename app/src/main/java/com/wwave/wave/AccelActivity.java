@@ -11,23 +11,17 @@ import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
-
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.BreakIterator;
-import java.util.ArrayList;
 
 public class AccelActivity extends Activity implements SensorEventListener {
     private SensorManager sensorManager;
@@ -49,7 +43,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accel);
 
-        movement = findViewById(R.id.tvTotalMovement);
+        movement = findViewById(R.id.tvInstructions);
         gv_Movement = findViewById(R.id.gv_Movement);
         nameLine = (EditText) findViewById(R.id.etEmailAdd);
 

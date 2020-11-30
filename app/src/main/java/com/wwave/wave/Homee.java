@@ -46,13 +46,13 @@ public class Homee extends AppCompatActivity implements View.OnClickListener {
 
         uvIndex = findViewById(R.id.uvIndex);
 
-        try {
-            String result = new getUV().execute().get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            String result = new getUV().execute().get();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
@@ -61,7 +61,7 @@ public class Homee extends AppCompatActivity implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.rednessCV:
-                i = new Intent(this, CustomCamera.class);
+                i = new Intent(this, UVSkin.class);
                 startActivity(i);
                 break;
             case R.id.accelerationCV:

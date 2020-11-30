@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/my_logo_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Homee"></activity>
+        <activity android:name=".UVSkin"></activity>
+        <activity android:name=".Homee" />
         <activity android:name=".ImageCalculations" />
         <activity android:name=".ImageProcessing" />
         <activity android:name=".AccelActivity">
@@ -59,6 +60,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
