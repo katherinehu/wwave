@@ -64,7 +64,7 @@ public class UVSkin extends AppCompatActivity {
         tvBurnTime = findViewById(R.id.tvBurnTime);
         btnBurnTime = findViewById(R.id.btnBurnTime);
 
-        //Ask for permission from the user to use the camera if the permission wasn't granted
+        //Ask for permission from the user to use the camera if the permission wasnt granted
         if(!allPermissionsGranted()){
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
         }
