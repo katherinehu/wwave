@@ -126,7 +126,7 @@ public class UVSkin extends AppCompatActivity {
                             int blueDifference = (types[2] - blue) * (types[2] - blue);
                             differences.add(redDifference + greenDifference + blueDifference);
                         }
-//
+
                         //find the smallest of the differences
                         int currentSmallest = -1;
                         int smallestValueSoFar = 2000000000;
