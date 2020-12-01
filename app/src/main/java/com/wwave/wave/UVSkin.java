@@ -73,12 +73,8 @@ public class UVSkin extends AppCompatActivity {
         etLongitude = findViewById(R.id.editLongitude);
         etLatitude = findViewById(R.id.editLatitude);
 
-//        //set ivSkinPreview and display color to invisible
-//        ivSkinPreview.setVisibility(View.INVISIBLE);
-//        displayColor.setVisibility(View.INVISIBLE);
 
-
-        //Ask for permission from the user to use the camera if the permission wasnt granted
+        //Ask for permission from the user to use the camera if the permission wasn't granted
         if(!allPermissionsGranted()){
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
         }
