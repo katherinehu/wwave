@@ -24,7 +24,7 @@
             android:fontFamily="sans-serif"
             android:text="According to the Fitzpatrick skin type scale, there are 6 skin types, and the lighter your skin, the sooner you burn.\n\nTake a picture of your skin and the app will tell you what skin type you are, and how long you will last in the sun based on the UV in your current location."
             android:textColor="#000000"
-            android:textSize="16dp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -85,6 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:textSize="20sp"
             android:text="Enter your location to calculate burn time:"
             android:textColor="#000000"
             android:visibility="gone"
