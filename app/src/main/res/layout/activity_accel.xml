@@ -10,7 +10,7 @@
         android:id="@+id/tvInstructions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_black"
+        android:fontFamily="sans-serif-black"
         android:text="Movement so far: 0"
         android:textColor="@android:color/black"
         android:textSize="25dp"
@@ -33,20 +33,6 @@
 
     </com.jjoe64.graphview.GraphView>
 
-    <EditText
-        android:id="@+id/etEmailAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:fontFamily="@font/roboto_black"
-        android:hint="Enter Email Address"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/btnStop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmailInfo" />
-
     <Button
         android:id="@+id/btnStop"
         android:layout_width="200dp"
@@ -58,27 +44,33 @@
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/btnSave"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.075"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEmailAdd" />
 
-    <TextView
-        android:id="@+id/txtEmailInfo"
+    <EditText
+        android:id="@+id/etEmailAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_black"
-        android:text="Email Info"
-        app:layout_constraintBottom_toTopOf="@+id/etEmailAdd"
+        android:ems="10"
+        android:fontFamily="sans-serif-medium"
+        android:hint="Enter Email Address"
+        android:inputType="textPersonName"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/btnStop"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.059"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gv_Movement" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEmailInfo" />
 
     <Button
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/buttonshapesmall"
         android:text="Save Movement"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/btnRetrieve"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnStop" />
@@ -87,19 +79,41 @@
         android:id="@+id/btnRetrieve"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Retrieve Past Accel"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/buttonshapesmall"
+        android:text="Retrieve Movement"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSave" />
 
     <TextView
+        android:id="@+id/txtEmailInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="Email Info"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/etEmailAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gv_Movement" />
+
+    <TextView
         android:id="@+id/tv_Data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="vertical"
+        android:scrollHorizontally="false"
         android:text="Data"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.231"
         app:layout_constraintStart_toEndOf="@+id/btnSave"
-        app:layout_constraintTop_toBottomOf="@+id/btnStop" />
+        app:layout_constraintTop_toBottomOf="@+id/btnStop"
+        app:layout_constraintVertical_bias="0.185" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

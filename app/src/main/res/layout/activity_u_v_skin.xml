@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:elevation="5dp"
+    android:fillViewport="false"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:fillViewport="false">
+    android:padding="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,8 +21,9 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            android:fontFamily="@font/roboto_black"
-            android:text="According to the Fitzpatrick skin type scale, there are 6 skin types, and the lighter your skin, the sooner you burn. Take a picture of your skin and the app will tell you what skin type you are, and how long you will last in the sun based on the UV in your current location"
+            android:fontFamily="sans-serif"
+            android:text="According to the Fitzpatrick skin type scale, there are 6 skin types, and the lighter your skin, the sooner you burn.\n\nTake a picture of your skin and the app will tell you what skin type you are, and how long you will last in the sun based on the UV in your current location."
+            android:textColor="#000000"
             android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,9 +31,10 @@
 
         <ImageView
             android:id="@+id/imageView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="342dp"
+            android:layout_height="215dp"
             android:layout_marginTop="16dp"
+            android:fadingEdge="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvInstructions"
@@ -42,7 +45,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:background="@drawable/buttonshape"
+            android:elevation="10dp"
             android:text="Take photo of skin"
+            android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView6" />
@@ -52,6 +58,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="16dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@+id/displayColor"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,18 +71,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Estimated Skin Type"
+            android:textColor="#000000"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivSkinPreview" />
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1000dp"
-            android:text="TextView"
-            app:layout_constraintTop_toBottomOf="@+id/ivSkinPreview"
-            tools:layout_editor_absoluteX="342dp" />
+
 
         <TextView
             android:id="@+id/textView10"
@@ -83,6 +85,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Enter your location to calculate burn time:"
+            android:textColor="#000000"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvEstimatedSkin" />
@@ -98,6 +102,8 @@
             android:hint="Longitude (-180.00 to 180.00)"
             android:inputType="numberSigned|numberDecimal"
             android:numeric="signed"
+            android:textColor="#000000"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -113,6 +119,8 @@
             android:hint="Latitude (-90.00 to 90.00)"
             android:inputType="numberSigned|numberDecimal"
             android:numeric="signed"
+            android:textColor="#000000"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editLongitude" />
@@ -123,6 +131,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Estimated Burn Time"
+            android:textColor="#000000"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnBurnTime" />
@@ -132,7 +142,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:background="@drawable/buttonshapesmall"
             android:text="Find Burn Time"
+            android:textColor="@android:color/white"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editLatitude" />
@@ -142,7 +155,9 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="16dp"
+            android:elevation="5dp"
             android:text="Your Skin Color"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/ivSkinPreview"

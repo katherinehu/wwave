@@ -30,7 +30,7 @@ public class CreateAccount extends AppCompatActivity {
         btn_signUp = findViewById(R.id.btn_signUp);
 
         final SharedPreferences userInformation = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        final Intent goWelcome = new Intent(this,Welcome.class);
+        final Intent goWelcome = new Intent(this,Homee.class);
         btn_signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

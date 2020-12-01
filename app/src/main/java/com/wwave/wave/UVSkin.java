@@ -54,7 +54,7 @@ public class UVSkin extends AppCompatActivity {
     EditText etLongitude;
     EditText etLatitude;
 
-    String skinTypeGlobal;
+    String skinTypeGlobal = "st4";
 
     final int TAKE_PICTURE = 1235;
 
@@ -73,6 +73,11 @@ public class UVSkin extends AppCompatActivity {
         etLongitude = findViewById(R.id.editLongitude);
         etLatitude = findViewById(R.id.editLatitude);
 
+//        //set ivSkinPreview and display color to invisible
+//        ivSkinPreview.setVisibility(View.INVISIBLE);
+//        displayColor.setVisibility(View.INVISIBLE);
+
+
         //Ask for permission from the user to use the camera if the permission wasnt granted
         if(!allPermissionsGranted()){
             ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
@@ -86,6 +91,14 @@ public class UVSkin extends AppCompatActivity {
             public void onClick(View view) {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, TAKE_PICTURE);
+
+                ivSkinPreview.setVisibility(View.VISIBLE);
+                displayColor.setVisibility(View.VISIBLE);
+                tvBurnTime.setVisibility(View.VISIBLE);
+                btnBurnTime.setVisibility(View.VISIBLE);
+                etLongitude.setVisibility(View.VISIBLE);
+                etLatitude.setVisibility(View.VISIBLE);
+
             }
         });
 

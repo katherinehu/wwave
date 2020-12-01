@@ -42,7 +42,7 @@ public class About extends AppCompatActivity {
         btnGoToWebsite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://docs.google.com/document/d/1VTDw-DsQqZ8eiyUjsgbyr1UpM_ZmJNQ0QWuHrSHsOno/edit";
+                String url = "https://www.mayoclinic.org/diseases-conditions/wrinkles/symptoms-causes/syc-20354927";
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);

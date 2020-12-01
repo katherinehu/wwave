@@ -17,10 +17,11 @@
         android:layout_height="80dp"
         android:gravity="center"
         android:orientation="vertical">>
+
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="match_parent"
-            android:layout_height="133dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -64,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Redness"
+                    android:text="UV Info"
                     android:textStyle="bold" />
 
                 <TextView
@@ -72,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="Have a sunburn? Log your redness!"
+                    android:text="Learn how long you can stay in the sun for!"
                     android:textColor="@android:color/darker_gray" />
 
             </LinearLayout>
@@ -111,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="Want to know how fast your phone is going for no reason?"
+                    android:text="Check how much activity you have had!"
                     android:textColor="@android:color/darker_gray" />
 
             </LinearLayout>
@@ -204,20 +205,7 @@
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center"
-        android:orientation="vertical">>
 
-        <TextView
-            android:id="@+id/uvIndex"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="UV"
-            android:textStyle="bold" />
-    </LinearLayout>
 
     <LinearLayout
         android:clipToPadding="false"
