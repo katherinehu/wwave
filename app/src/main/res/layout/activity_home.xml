@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="Learn how long you can stay in the sun for!"
+                    android:text="Find how long you can stay in the sun for"
                     android:textColor="@android:color/darker_gray" />
 
             </LinearLayout>

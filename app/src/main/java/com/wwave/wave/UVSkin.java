@@ -94,6 +94,8 @@ public class UVSkin extends AppCompatActivity {
                 btnBurnTime.setVisibility(View.VISIBLE);
                 etLongitude.setVisibility(View.VISIBLE);
                 etLatitude.setVisibility(View.VISIBLE);
+                tvEstimatedSkin.setVisibility(View.VISIBLE);
+
 
             }
         });
