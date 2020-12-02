@@ -38,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/et_user" />
 
     <EditText
         android:id="@+id/et_pass2"
@@ -115,7 +115,7 @@
         tools:layout_editor_absoluteY="58dp" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/et_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
