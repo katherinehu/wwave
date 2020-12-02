@@ -68,8 +68,6 @@ public class LogIn extends AppCompatActivity {
             }
         });
 
-
-
         final Intent signup = new Intent(this,CreateAccount.class);
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,16 +76,16 @@ public class LogIn extends AppCompatActivity {
             }
         });
 
-        final Intent forgotI = new Intent (this, ResetPass.class);
 
         btn_forgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(forgotI);
+                startActivity(new Intent(getApplicationContext(),EmailPassword.class));
             }
         });
 
-        btn_reset   .setOnClickListener(new View.OnClickListener() {
+        final Intent forgotI = new Intent (this, ResetPass.class);
+        btn_reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(forgotI);
