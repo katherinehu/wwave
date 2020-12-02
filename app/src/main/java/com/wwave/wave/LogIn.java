@@ -30,7 +30,7 @@ public class LogIn extends AppCompatActivity {
         et_password = findViewById(R.id.et_pass2);
         et_username = findViewById(R.id.et_pass1);
         bt_logIn = findViewById(R.id.btn_Submit);
-        signUp = findViewById(R.id.btn_signUp);
+        signUp = findViewById(R.id.btnSignUp);
         btn_reset = findViewById(R.id.btn_reset);
         btn_forgot = findViewById(R.id.btn_forgot);
 
@@ -68,8 +68,6 @@ public class LogIn extends AppCompatActivity {
             }
         });
 
-
-
         final Intent signup = new Intent(this,CreateAccount.class);
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,16 +76,16 @@ public class LogIn extends AppCompatActivity {
             }
         });
 
-        final Intent forgotI = new Intent (this, ResetPass.class);
 
         btn_forgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(forgotI);
+                startActivity(new Intent(getApplicationContext(),EmailPassword.class));
             }
         });
 
-        btn_reset   .setOnClickListener(new View.OnClickListener() {
+        final Intent forgotI = new Intent (this, ResetPass.class);
+        btn_reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(forgotI);
