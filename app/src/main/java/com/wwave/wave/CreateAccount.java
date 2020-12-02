@@ -18,20 +18,23 @@ public class CreateAccount extends AppCompatActivity {
     EditText et_createdUsername;
     EditText et_createdPassword;
     EditText et_reenteredCreatedPassword;
-    Button btn_signUp;
+    Button btnSignUp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+
         et_name = findViewById(R.id.et_email);
         et_createdPassword = findViewById(R.id.et_createdPassword);
         et_reenteredCreatedPassword = findViewById(R.id.et_reenteredCreatedPassword);
         et_createdUsername = findViewById(R.id.et_createdUsername);
-        btn_signUp = findViewById(R.id.btn_signUp);
+        btnSignUp = findViewById(R.id.btnSignUp);
 
         final SharedPreferences userInformation = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final Intent goWelcome = new Intent(this,Homee.class);
-        btn_signUp.setOnClickListener(new View.OnClickListener() {
+
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = et_name.getText().toString();

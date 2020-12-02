@@ -30,7 +30,7 @@ public class LogIn extends AppCompatActivity {
         et_password = findViewById(R.id.et_pass2);
         et_username = findViewById(R.id.et_pass1);
         bt_logIn = findViewById(R.id.btn_Submit);
-        signUp = findViewById(R.id.btn_signUp);
+        signUp = findViewById(R.id.btnSignUp);
         btn_reset = findViewById(R.id.btn_reset);
         btn_forgot = findViewById(R.id.btn_forgot);
 
