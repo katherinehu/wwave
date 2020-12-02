@@ -2,8 +2,10 @@ package com.wwave.wave;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +47,9 @@ public class ResetPass extends AppCompatActivity {
                         edit.remove(username);
                         edit.putString(username,password);
                         edit.apply();
+                        Toast.makeText(getApplicationContext(),"Password reset successful",Toast.LENGTH_SHORT).show();
+                        SystemClock.sleep(1000);
+                        startActivity(new Intent(getApplicationContext(),LogIn.class));
                     }
                 } else {
                     Toast.makeText(getApplicationContext(),"Passwords don't match try again",Toast.LENGTH_SHORT).show();

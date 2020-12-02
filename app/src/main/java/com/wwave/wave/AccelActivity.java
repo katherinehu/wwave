@@ -160,7 +160,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
             public void onClick(View v) {
                 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 int size = pref.getInt("numberAccelAdded",0);
-                String s = "Previously saved movements:";
+                String s = "Previously saved movements:\n";
                 for (int i = 0; i < size; ++i) {
                     s += (pref.getString("accel" + i, "0")) + "\n";
                 }

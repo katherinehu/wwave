@@ -104,6 +104,7 @@
         android:id="@+id/tv_Data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbars="vertical"
         android:scrollHorizontally="false"
