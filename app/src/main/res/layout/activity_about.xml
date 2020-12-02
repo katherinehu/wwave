@@ -15,8 +15,9 @@
         android:textColor="@android:color/black"
         android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@+id/btnGoToWebsite"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        tools:layout_editor_absoluteX="54dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <Button
         android:id="@+id/btnGoToWebsite"
@@ -26,8 +27,9 @@
         android:text="Our Website"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/btnSendEmail"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:layout_editor_absoluteX="129dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/btnSendEmail"
@@ -37,16 +39,18 @@
         android:text="Email us"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGoToWebsite"
-        tools:layout_editor_absoluteX="129dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGoToWebsite" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/w_logo"
-        tools:layout_editor_absoluteX="54dp" />
+        app:srcCompat="@drawable/w_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
