@@ -17,6 +17,9 @@ public class LogIn extends AppCompatActivity {
     EditText et_password;
     Button bt_logIn;
     Button signUp;
+    Button btn_reset;
+    Button btn_forgot;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,10 @@ public class LogIn extends AppCompatActivity {
         et_username = findViewById(R.id.et_pass1);
         bt_logIn = findViewById(R.id.btn_Submit);
         signUp = findViewById(R.id.btn_signUp);
+        btn_reset = findViewById(R.id.btn_reset);
+        btn_forgot = findViewById(R.id.btn_forgot);
+
+
 
         //Allow users to store their own data
         final SharedPreferences userInformation = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -61,11 +68,29 @@ public class LogIn extends AppCompatActivity {
             }
         });
 
+
+
         final Intent signup = new Intent(this,CreateAccount.class);
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(signup);
+            }
+        });
+
+        final Intent forgotI = new Intent (this, ResetPass.class);
+
+        btn_forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(forgotI);
+            }
+        });
+
+        btn_reset   .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(forgotI);
             }
         });
 

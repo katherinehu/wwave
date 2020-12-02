@@ -30,10 +30,10 @@ public class ResetPass extends AppCompatActivity {
         SharedPreferences.Editor edit = pref.edit();
 
         edit.remove(et_user.toString());
-        edit.putString(et_user,et_pass1);
-
-        edit.putString(username+"NAME",name);
-        edit.putString("nameOfUser",name);
+//        edit.putString(et_user,et_pass1);
+//
+//        edit.putString(username+"NAME",name);
+//        edit.putString("nameOfUser",name);
 
 
         edit.apply();
