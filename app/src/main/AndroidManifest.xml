@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/my_logo_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UVSkin"></activity>
+        <activity android:name=".ResetPass"></activity>
+        <activity android:name=".UVSkin" />
         <activity android:name=".Homee" />
         <activity android:name=".ImageCalculations" />
         <activity android:name=".ImageProcessing" />

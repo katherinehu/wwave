@@ -24,9 +24,9 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
 
         //Declare UI elements
-        et_password = findViewById(R.id.et_password);
-        et_username = findViewById(R.id.et_username);
-        bt_logIn = findViewById(R.id.btn_signIn);
+        et_password = findViewById(R.id.et_pass2);
+        et_username = findViewById(R.id.et_pass1);
+        bt_logIn = findViewById(R.id.btn_Submit);
         signUp = findViewById(R.id.btn_signUp);
 
         //Allow users to store their own data
