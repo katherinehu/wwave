@@ -37,9 +37,15 @@ public class ResetPass extends AppCompatActivity {
                     SharedPreferences.Editor edit = pref.edit();
                     String username = et_user.getText().toString();
                     String password = et_pass1.getText().toString();
-                    edit.remove(username);
-                    edit.putString(username,password);
-                    edit.apply();
+
+                    if (pref.getString(username, "not found123").equals("not found123")) {
+                        Toast.makeText(getApplicationContext(), "Username does not exist",Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        edit.remove(username);
+                        edit.putString(username,password);
+                        edit.apply();
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(),"Passwords don't match try again",Toast.LENGTH_SHORT).show();
                 }
