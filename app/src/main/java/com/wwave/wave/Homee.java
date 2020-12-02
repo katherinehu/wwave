@@ -1,26 +1,12 @@
 package com.wwave.wave;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
-import okhttp3.Headers;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 public class Homee extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,15 +29,6 @@ public class Homee extends AppCompatActivity implements View.OnClickListener {
         accelerationCV.setOnClickListener(this);
         aboutCV.setOnClickListener(this);
         feedbackCV.setOnClickListener(this);
-
-
-//        try {
-//            String result = new getUV().execute().get();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
     }
 
     @Override
@@ -82,55 +59,4 @@ public class Homee extends AppCompatActivity implements View.OnClickListener {
         }
 
     }
-
-//    public class getUV extends AsyncTask<String,String,String> {
-//
-//        @Override
-//        protected String doInBackground(String... strings) {
-//            OkHttpClient client = new OkHttpClient();
-//
-//            Request request = new Request.Builder()
-//                    .url("https://api.openuv.io/api/v1/uv?lat=37.56&lng=126.97")
-//                    .get()
-//                    .addHeader("x-access-token", "0b1d3edc053bf726a35cddde61beb687")
-//                    .build();
-//
-//
-//            Response response = null;
-//            try {
-//                response = client.newCall(request).execute();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            JSONObject responseObj = null;
-//            try {
-//                responseObj = new JSONObject(response.body().string());
-//                System.out.println("here");
-//            } catch (JSONException | IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            double uvValue = 0;
-//            try {
-//                uvValue = responseObj.getJSONObject("result").getDouble("uv");
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//            String uv = Double.toString(uvValue);
-//            uvIndex.setText(uv);
-//            return null;
-//        }
-//    }
 }
-
-//        Document doc;
-//
-//        try {
-//            doc = Jsoup.connect("https://www.vogella.com/").get();
-//
-//            Element element = doc.select("div[aria-live]").first();
-//            uvIndex.setText(element.text());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }

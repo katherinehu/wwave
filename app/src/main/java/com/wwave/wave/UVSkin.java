@@ -55,6 +55,7 @@ public class UVSkin extends AppCompatActivity {
     EditText etLatitude;
 
     String skinTypeGlobal = "st4";
+    String skinTypeGlobalActual;
 
     final int TAKE_PICTURE = 1235;
 
@@ -149,7 +150,7 @@ public class UVSkin extends AppCompatActivity {
                 int exposure_time = safe_exposure_time.getInt(st);
 
                 double curUV = result.getDouble("uv");
-                String displayText = "Today's UV is " + curUV +  ". With skin type, your safe exposure time today is " + exposure_time + " minutes.";
+                String displayText = "Today's UV is " + curUV +  ". With skin type " + skinTypeGlobalActual +", your safe exposure time today is " + exposure_time + " minutes.";
                 return displayText;
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -254,26 +255,32 @@ public class UVSkin extends AppCompatActivity {
                             case 0:
                                 tvEstimatedSkin.setText("Your skin type: I");
                                 skinTypeGlobal = "st1";
+                                skinTypeGlobalActual = "I";
                                 break;
                             case 1:
                                 tvEstimatedSkin.setText("Your skin type: II");
                                 skinTypeGlobal = "st2";
+                                skinTypeGlobalActual = "II";
                                 break;
                             case 2:
                                 tvEstimatedSkin.setText("Your skin type: III");
                                 skinTypeGlobal = "st3";
+                                skinTypeGlobalActual = "III";
                                 break;
                             case 3:
                                 tvEstimatedSkin.setText("Your skin type: IV");
                                 skinTypeGlobal = "st4";
+                                skinTypeGlobalActual = "IV";
                                 break;
                             case 4:
                                 tvEstimatedSkin.setText("Your skin type: V");
                                 skinTypeGlobal = "st5";
+                                skinTypeGlobalActual = "V";
                                 break;
                             case 5:
                                 tvEstimatedSkin.setText("Your skin type: VI");
                                 skinTypeGlobal = "st6";
+                                skinTypeGlobalActual = "VI";
                                 break;
                         }
                      }
