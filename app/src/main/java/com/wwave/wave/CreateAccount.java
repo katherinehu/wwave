@@ -34,7 +34,7 @@ public class CreateAccount extends AppCompatActivity {
         btn_signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = et_name.getText().toString();
+                String email = et_name.getText().toString();
                 String password1 = et_createdPassword.getText().toString();
                 String password2 = et_reenteredCreatedPassword.getText().toString();
                 String username = et_createdUsername.getText().toString();
@@ -43,8 +43,7 @@ public class CreateAccount extends AppCompatActivity {
                         //We create the account
                         SharedPreferences.Editor editor = userInformation.edit();
                         editor.putString(username,password1);
-                        editor.putString(username+"NAME",name);
-                        editor.putString("nameOfUser",name);
+                        editor.putString(username+"EMAIL",email);
                         editor.commit();
                         Toast succ = Toast.makeText(getApplicationContext(),"Account successfully created",Toast.LENGTH_SHORT);
                         succ.show();
