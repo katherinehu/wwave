@@ -97,7 +97,7 @@
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:background="@drawable/cerclebackgroundpurple"
-                    android:src="@drawable/ic_baseline_wb_sunny_24"
+                    android:src="@drawable/ic_baseline_directions_run_24"
                     android:padding="10dp"/>
 
                 <TextView
@@ -143,7 +143,7 @@
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:background="@drawable/cerclebackgroundpurple"
-                    android:src="@drawable/ic_baseline_wb_sunny_24"
+                    android:src="@drawable/ic_baseline_about_24"
                     android:padding="10dp"/>
 
                 <TextView
@@ -184,7 +184,7 @@
                     android:layout_height="64dp"
                     android:background="@drawable/cerclebackgroundpurple"
                     android:padding="10dp"
-                    android:src="@drawable/ic_baseline_wb_sunny_24" />
+                    android:src="@drawable/ic_baseline_feedback_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
