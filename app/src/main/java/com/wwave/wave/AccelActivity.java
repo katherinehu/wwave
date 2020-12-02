@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
@@ -49,7 +50,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accel);
 
-        movement = findViewById(R.id.tvInstructions);
+        movement = findViewById(R.id.tvMovementSoFar);
         gv_Movement = findViewById(R.id.gv_Movement);
         nameLine = (EditText) findViewById(R.id.etEmailAdd);
 
@@ -138,6 +139,7 @@ public class AccelActivity extends Activity implements SensorEventListener {
         btnRetrieve = findViewById(R.id.btnRetrieve);
         tvData = findViewById(R.id.tv_Data);
 
+        tvData.setVisibility(View.GONE);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,10 +147,11 @@ public class AccelActivity extends Activity implements SensorEventListener {
                 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor edit = pref.edit();
                 int size = pref.getInt("numberAccelAdded",0);
-                edit.putString("accel" + size, String.valueOf(totalMovement));
+                edit.putString("accel" + size, Double.toString((Round((float)totalMovement,1))));
                 ++size;
                 edit.putInt("numberAccelAdded",size);
                 edit.commit();
+                Toast.makeText(getApplicationContext(),"Data saved",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -157,11 +160,12 @@ public class AccelActivity extends Activity implements SensorEventListener {
             public void onClick(View v) {
                 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 int size = pref.getInt("numberAccelAdded",0);
-                String s = "";
+                String s = "Previously saved movements:";
                 for (int i = 0; i < size; ++i) {
                     s += (pref.getString("accel" + i, "0")) + "\n";
                 }
                 tvData.setText(s);
+                tvData.setVisibility(View.VISIBLE);
             }
         });
 
