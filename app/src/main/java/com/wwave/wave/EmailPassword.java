@@ -37,7 +37,7 @@ public class EmailPassword extends AppCompatActivity {
                     //intent is for emailing password
                     String password = data.getString(username,"non weird default value");
                     Intent intent = new Intent(Intent.ACTION_SENDTO);
-                    String recipient = username;
+                    String [] recipient = {email};
                     String subject = "Remember your password next time";
                     intent.setData(Uri.parse("mailto:"));
                     intent.putExtra(intent.EXTRA_EMAIL, recipient);
